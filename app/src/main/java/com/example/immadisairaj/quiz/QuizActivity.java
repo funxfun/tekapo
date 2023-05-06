@@ -92,13 +92,13 @@ public class QuizActivity extends AppCompatActivity {
 		opA.setVisibility(View.VISIBLE);
 		opB.setVisibility(View.VISIBLE);
 
-		if (qAndA.results.get(ques).getType().equals("boolean")) {
-			opC.setVisibility(View.GONE);
-			opD.setVisibility(View.GONE);
-		} else {
-			opC.setVisibility(View.VISIBLE);
-			opD.setVisibility(View.VISIBLE);
-		}
+//		if (qAndA.results.get(ques).getType().equals("boolean")) {
+//			opC.setVisibility(View.GONE);
+//			opD.setVisibility(View.GONE);
+//		} else {
+//			opC.setVisibility(View.VISIBLE);
+//			opD.setVisibility(View.VISIBLE);
+//		}
 
 		q_nos = "Question: " + (ques + 1) + "/" + qAndA.question.size();
 		q_no.setText(q_nos);
@@ -173,13 +173,13 @@ public class QuizActivity extends AppCompatActivity {
 		opA.setVisibility(View.VISIBLE);
 		opB.setVisibility(View.VISIBLE);
 
-		if (qAndA.results.get(ques).getType().equals("boolean")) {
-			opC.setVisibility(View.GONE);
-			opD.setVisibility(View.GONE);
-		} else {
-			opC.setVisibility(View.VISIBLE);
-			opD.setVisibility(View.VISIBLE);
-		}
+//		if (qAndA.results.get(ques).getType().equals("boolean")) {
+//			opC.setVisibility(View.GONE);
+//			opD.setVisibility(View.GONE);
+//		} else {
+//			opC.setVisibility(View.VISIBLE);
+//			opD.setVisibility(View.VISIBLE);
+//		}
 
 		q_nos = "Question: " + (ques + 1) + "/" + qAndA.question.size();
 		q_no.setText(q_nos);

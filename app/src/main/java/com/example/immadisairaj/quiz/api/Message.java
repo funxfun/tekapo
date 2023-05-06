@@ -1,26 +1,31 @@
 package com.example.immadisairaj.quiz.api;
 
-import java.io.Serializable;
-import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Result implements Serializable {
+public class Message {
+    @SerializedName("role")
+    @Expose
+    private String role;
 
     @SerializedName("content")
     @Expose
     private String content;
 
-    public Result() {
+    public Message() {
     }
 
-    public Result(String content) {
+    public Message(String role, String content) {
         super();
+        this.role = role;
         this.content = content;
+    }
+
+    public String getRole() {
+        return role;
     }
 
     public String getContent() {
         return content;
     }
-
 }

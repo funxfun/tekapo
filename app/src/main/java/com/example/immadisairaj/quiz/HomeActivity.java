@@ -12,15 +12,17 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.immadisairaj.quiz.api.Api;
-import com.example.immadisairaj.quiz.api.ApiCount;
+import com.example.immadisairaj.quiz.api.Message;
 import com.example.immadisairaj.quiz.api.QuizQuestions;
+import com.example.immadisairaj.quiz.api.Request;
 import com.example.immadisairaj.quiz.api.Result;
 import com.example.immadisairaj.quiz.question.Question;
 
-import java.io.UnsupportedEncodingException;
-import java.util.List;
+import java.util.ArrayList;
 import java.util.Random;
 
+import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -41,7 +43,7 @@ public class HomeActivity extends AppCompatActivity {
 				progressBar.setVisibility(View.VISIBLE);
 				q = new Question(getApplicationContext());
 				view.setClickable(false);
-				fetchQuestionCount();
+				fetchQuestionAPI();
 			} else if (view.getId() == R.id.home_filter) {
 				Intent intent = new Intent(getApplicationContext(), SettingActivity.class);
 				intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -97,48 +99,54 @@ public class HomeActivity extends AppCompatActivity {
 		}
 	}
 
-	private void fetchQuestionCount() {
-		int category_value = Integer.valueOf(category);
+	public void fetchQuestionAPI() {
+		Random rnd = new Random();
+		boolean isJapanese = false;// rnd.nextInt(6) >= 5 ? true : false;
+		boolean isMultichoice = rnd.nextInt(5) >= 2 ? true : false;
+		String topic;
+		switch (rnd.nextInt(12)) {
+			case 0: topic = "science"; break;
+			case 1: topic = "computers"; break;
+			case 2: topic = "nature"; break;
+			case 3: topic = "famous people"; break;
+			case 4: topic = "video games"; break;
+			case 5: topic = "anime and manga"; break;
+			case 6: topic = "technology"; break;
+			case 7: topic = "programming"; break;
+
+			default:
+			case 8:
+			case 9:
+			case 10:
+			case 11:
+				topic = "math"; break;
+		}
+
+		Message problem = new Message("user", "Give a problem with the solution on the topic of "
+				+ topic
+				+ ", in " + (isMultichoice ? "multi-choice" : "true/false") + " format"
+				+ ", " + (isJapanese ? " suitable for a 10 year old child, and in the Japanese language at a 10 year old reading level" :
+				"suitable for a kid aged between 5 and 9."));
+		ArrayList<Message> messages = new ArrayList<>();
+		messages.add(problem);
+		Request request = new Request("gpt-3.5-turbo", messages);
+
+		HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
+		interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+		OkHttpClient client = new OkHttpClient.Builder()
+				.addInterceptor(interceptor).build();
 
 		Retrofit retrofit = new Retrofit.Builder()
+                .client(client)
 				.baseUrl(Api.BASE_URL)
 				.addConverterFactory(GsonConverterFactory.create())
 				.build();
 		Api api = retrofit.create(Api.class);
-		Call<ApiCount> call = api.getQuizQuestions(category_value);
-		call.enqueue(new Callback<ApiCount>() {
-			@Override
-			public void onResponse(Call<ApiCount> call, Response<ApiCount> response) {
-				switch (difficulty) {
-					case "easy":
-						fetchQuestionAPI(response.body().getCategoryQuestionCount().getTotalEasyQuestionCount());
-						break;
-					case "medium":
-						fetchQuestionAPI(response.body().getCategoryQuestionCount().getTotalMediumQuestionCount());
-						break;
-					case "hard":
-						fetchQuestionAPI(response.body().getCategoryQuestionCount().getTotalHardQuestionCount());
-						break;
-				}
-			}
-
-			@Override
-			public void onFailure(Call<ApiCount> call, Throwable t) {
-				Toast.makeText(getApplicationContext(), "No Internet Connection", Toast.LENGTH_SHORT).show();
-				progressBar.setVisibility(View.INVISIBLE);
-				start.setClickable(true);
-			}
-		});
-	}
-
-	public void fetchQuestionAPI(int categoryCount) {
-		int category_value = Integer.valueOf(category);
-		Retrofit retrofit = new Retrofit.Builder()
-				.baseUrl(Api.BASE_URL)
-				.addConverterFactory(GsonConverterFactory.create())
-				.build();
-		Api api = retrofit.create(Api.class);
-		Call<QuizQuestions> call = api.getQuizQuestions("url3986", categoryCount >= 10 ? 10 : categoryCount - 1, difficulty, category_value);
+		Call<QuizQuestions> call = api.getQuizQuestions(
+				"Bearer [API KEY]",
+				"application/json",
+				request
+				);
 		call.enqueue(new Callback<QuizQuestions>() {
 			@Override
 			public void onResponse(Call<QuizQuestions> call, Response<QuizQuestions> response) {
@@ -146,40 +154,39 @@ public class HomeActivity extends AppCompatActivity {
 				Log.v("url-----", call.request().url().toString());
 
 				QuizQuestions quizQuestions = response.body();
+				String content = quizQuestions.getChoices().get(0).getMessage().getContent();
+				Toast.makeText(getApplicationContext(), content, Toast.LENGTH_LONG).show();
 
-				if (quizQuestions.getResponseCode() == 0) {
-
-					q.results = quizQuestions.getResults();
-
-					if (q.results != null) {
-						for (Result r : q.results) {
-							try {
-								q.question.add(java.net.URLDecoder.decode(r.getQuestion(), "UTF-8"));
-							} catch (UnsupportedEncodingException e) {
-								e.printStackTrace();
-							}
-							Random random = new Random();
-							// For Boolean Type Questions, only 2 possible options (True/False)
-							// For multiple choices, 4 options are required.
-							int ran = r.getType().equals("boolean")
-									? random.nextInt(2)
-									: random.nextInt(4);
-							setOptions(r, ran);
-							q.Answer.add(ran + 1);
-						}
-						Log.v("answers", q.Answer.toString());
-					}
-				}
-				progressBar.setVisibility(View.INVISIBLE);
-				start.setClickable(true);
-				Intent intent = new Intent(HomeActivity.this, QuizActivity.class);
-				intent.putExtra("question", q);
-				startActivity(intent);
+//				q.results = quizQuestions.getResults();
+//
+//				if (q.results != null) {
+//					for (Result r : q.results) {
+//						try {
+//							q.question.add(java.net.URLDecoder.decode(r.getQuestion(), "UTF-8"));
+//						} catch (UnsupportedEncodingException e) {
+//							e.printStackTrace();
+//						}
+//						Random random = new Random();
+//						// For Boolean Type Questions, only 2 possible options (True/False)
+//						// For multiple choices, 4 options are required.
+//						int ran = r.getType().equals("boolean")
+//								? random.nextInt(2)
+//								: random.nextInt(4);
+//						setOptions(r, ran);
+//						q.Answer.add(ran + 1);
+//					}
+//					Log.v("answers", q.Answer.toString());
+//				}
+//				progressBar.setVisibility(View.INVISIBLE);
+//				start.setClickable(true);
+//				Intent intent = new Intent(HomeActivity.this, QuizActivity.class);
+//				intent.putExtra("question", q);
+//				startActivity(intent);
 			}
 
 			@Override
 			public void onFailure(Call<QuizQuestions> call, Throwable t) {
-				Toast.makeText(getApplicationContext(), "No Internet Connection", Toast.LENGTH_SHORT).show();
+				Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
 				progressBar.setVisibility(View.INVISIBLE);
 				start.setClickable(true);
 			}
@@ -187,116 +194,116 @@ public class HomeActivity extends AppCompatActivity {
 	}
 
 	void setOptions(Result r, int ran) {
-		List<String> wrong;
-		switch (ran) {
-			case 0:
-				try {
-					q.optA.add(java.net.URLDecoder.decode(r.getCorrectAnswer(), "UTF-8"));
-				} catch (UnsupportedEncodingException e) {
-					e.printStackTrace();
-				}
-
-				wrong = r.getIncorrectAnswers();
-				try {
-					q.optB.add(java.net.URLDecoder.decode(wrong.get(0), "UTF-8"));
-				} catch (UnsupportedEncodingException e) {
-					e.printStackTrace();
-				}
-				// Options C, D are not applicable for Boolean Type Questions.
-				if (r.getType().equals("boolean")) {
-					q.optC.add("false");
-					q.optD.add("false");
-					return;
-				}
-				try {
-					q.optC.add(java.net.URLDecoder.decode(wrong.get(1), "UTF-8"));
-				} catch (UnsupportedEncodingException e) {
-					e.printStackTrace();
-				}
-				try {
-					q.optD.add(java.net.URLDecoder.decode(wrong.get(2), "UTF-8"));
-				} catch (UnsupportedEncodingException e) {
-					e.printStackTrace();
-				}
-				break;
-			case 1:
-				try {
-					q.optB.add(java.net.URLDecoder.decode(r.getCorrectAnswer(), "UTF-8"));
-				} catch (UnsupportedEncodingException e) {
-					e.printStackTrace();
-				}
-
-				wrong = r.getIncorrectAnswers();
-				try {
-					q.optA.add(java.net.URLDecoder.decode(wrong.get(0), "UTF-8"));
-				} catch (UnsupportedEncodingException e) {
-					e.printStackTrace();
-				}
-				// Options C, D are not applicable for Boolean Type Questions.
-				if (r.getType().equals("boolean")) {
-					q.optC.add("false");
-					q.optD.add("false");
-					return;
-				}
-				try {
-					q.optC.add(java.net.URLDecoder.decode(wrong.get(1), "UTF-8"));
-				} catch (UnsupportedEncodingException e) {
-					e.printStackTrace();
-				}
-				try {
-					q.optD.add(java.net.URLDecoder.decode(wrong.get(2), "UTF-8"));
-				} catch (UnsupportedEncodingException e) {
-					e.printStackTrace();
-				}
-				break;
-			case 2:
-				try {
-					q.optC.add(java.net.URLDecoder.decode(r.getCorrectAnswer(), "UTF-8"));
-				} catch (UnsupportedEncodingException e) {
-					e.printStackTrace();
-				}
-
-				wrong = r.getIncorrectAnswers();
-				try {
-					q.optA.add(java.net.URLDecoder.decode(wrong.get(0), "UTF-8"));
-				} catch (UnsupportedEncodingException e) {
-					e.printStackTrace();
-				}
-				try {
-					q.optB.add(java.net.URLDecoder.decode(wrong.get(1), "UTF-8"));
-				} catch (UnsupportedEncodingException e) {
-					e.printStackTrace();
-				}
-				try {
-					q.optD.add(java.net.URLDecoder.decode(wrong.get(2), "UTF-8"));
-				} catch (UnsupportedEncodingException e) {
-					e.printStackTrace();
-				}
-				break;
-			case 3:
-				try {
-					q.optD.add(java.net.URLDecoder.decode(r.getCorrectAnswer(), "UTF-8"));
-				} catch (UnsupportedEncodingException e) {
-					e.printStackTrace();
-				}
-
-				wrong = r.getIncorrectAnswers();
-				try {
-					q.optA.add(java.net.URLDecoder.decode(wrong.get(0), "UTF-8"));
-				} catch (UnsupportedEncodingException e) {
-					e.printStackTrace();
-				}
-				try {
-					q.optB.add(java.net.URLDecoder.decode(wrong.get(1), "UTF-8"));
-				} catch (UnsupportedEncodingException e) {
-					e.printStackTrace();
-				}
-				try {
-					q.optC.add(java.net.URLDecoder.decode(wrong.get(2), "UTF-8"));
-				} catch (UnsupportedEncodingException e) {
-					e.printStackTrace();
-				}
-				break;
-		}
+//		List<String> wrong;
+//		switch (ran) {
+//			case 0:
+//				try {
+//					q.optA.add(java.net.URLDecoder.decode(r.getCorrectAnswer(), "UTF-8"));
+//				} catch (UnsupportedEncodingException e) {
+//					e.printStackTrace();
+//				}
+//
+//				wrong = r.getIncorrectAnswers();
+//				try {
+//					q.optB.add(java.net.URLDecoder.decode(wrong.get(0), "UTF-8"));
+//				} catch (UnsupportedEncodingException e) {
+//					e.printStackTrace();
+//				}
+//				// Options C, D are not applicable for Boolean Type Questions.
+//				if (r.getType().equals("boolean")) {
+//					q.optC.add("false");
+//					q.optD.add("false");
+//					return;
+//				}
+//				try {
+//					q.optC.add(java.net.URLDecoder.decode(wrong.get(1), "UTF-8"));
+//				} catch (UnsupportedEncodingException e) {
+//					e.printStackTrace();
+//				}
+//				try {
+//					q.optD.add(java.net.URLDecoder.decode(wrong.get(2), "UTF-8"));
+//				} catch (UnsupportedEncodingException e) {
+//					e.printStackTrace();
+//				}
+//				break;
+//			case 1:
+//				try {
+//					q.optB.add(java.net.URLDecoder.decode(r.getCorrectAnswer(), "UTF-8"));
+//				} catch (UnsupportedEncodingException e) {
+//					e.printStackTrace();
+//				}
+//
+//				wrong = r.getIncorrectAnswers();
+//				try {
+//					q.optA.add(java.net.URLDecoder.decode(wrong.get(0), "UTF-8"));
+//				} catch (UnsupportedEncodingException e) {
+//					e.printStackTrace();
+//				}
+//				// Options C, D are not applicable for Boolean Type Questions.
+//				if (r.getType().equals("boolean")) {
+//					q.optC.add("false");
+//					q.optD.add("false");
+//					return;
+//				}
+//				try {
+//					q.optC.add(java.net.URLDecoder.decode(wrong.get(1), "UTF-8"));
+//				} catch (UnsupportedEncodingException e) {
+//					e.printStackTrace();
+//				}
+//				try {
+//					q.optD.add(java.net.URLDecoder.decode(wrong.get(2), "UTF-8"));
+//				} catch (UnsupportedEncodingException e) {
+//					e.printStackTrace();
+//				}
+//				break;
+//			case 2:
+//				try {
+//					q.optC.add(java.net.URLDecoder.decode(r.getCorrectAnswer(), "UTF-8"));
+//				} catch (UnsupportedEncodingException e) {
+//					e.printStackTrace();
+//				}
+//
+//				wrong = r.getIncorrectAnswers();
+//				try {
+//					q.optA.add(java.net.URLDecoder.decode(wrong.get(0), "UTF-8"));
+//				} catch (UnsupportedEncodingException e) {
+//					e.printStackTrace();
+//				}
+//				try {
+//					q.optB.add(java.net.URLDecoder.decode(wrong.get(1), "UTF-8"));
+//				} catch (UnsupportedEncodingException e) {
+//					e.printStackTrace();
+//				}
+//				try {
+//					q.optD.add(java.net.URLDecoder.decode(wrong.get(2), "UTF-8"));
+//				} catch (UnsupportedEncodingException e) {
+//					e.printStackTrace();
+//				}
+//				break;
+//			case 3:
+//				try {
+//					q.optD.add(java.net.URLDecoder.decode(r.getCorrectAnswer(), "UTF-8"));
+//				} catch (UnsupportedEncodingException e) {
+//					e.printStackTrace();
+//				}
+//
+//				wrong = r.getIncorrectAnswers();
+//				try {
+//					q.optA.add(java.net.URLDecoder.decode(wrong.get(0), "UTF-8"));
+//				} catch (UnsupportedEncodingException e) {
+//					e.printStackTrace();
+//				}
+//				try {
+//					q.optB.add(java.net.URLDecoder.decode(wrong.get(1), "UTF-8"));
+//				} catch (UnsupportedEncodingException e) {
+//					e.printStackTrace();
+//				}
+//				try {
+//					q.optC.add(java.net.URLDecoder.decode(wrong.get(2), "UTF-8"));
+//				} catch (UnsupportedEncodingException e) {
+//					e.printStackTrace();
+//				}
+//				break;
+//		}
 	}
 }

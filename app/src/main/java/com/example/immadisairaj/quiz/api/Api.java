@@ -1,22 +1,19 @@
 package com.example.immadisairaj.quiz.api;
 
+import java.util.List;
+
 import retrofit2.Call;
-import retrofit2.http.GET;
-import retrofit2.http.Query;
+import retrofit2.http.Body;
+import retrofit2.http.Header;
+import retrofit2.http.POST;
 
 public interface Api {
 
-    String BASE_URL = "https://opentdb.com/";
+    String BASE_URL = "https://api.openai.com/";
 
-    @GET("api.php")
+    @POST("v1/chat/completions")
     Call<QuizQuestions> getQuizQuestions(
-            @Query("encode") String encode,
-            @Query("amount") Integer amount,
-            @Query("difficulty") String difficulty,
-            @Query("category") Integer category);
-
-    @GET("api_count.php")
-    Call<ApiCount> getQuizQuestions(
-            @Query("category") Integer category);
-
+            @Header("authorization") String token,
+            @Header("content-type") String contentType,
+            @Body Request request);
 }

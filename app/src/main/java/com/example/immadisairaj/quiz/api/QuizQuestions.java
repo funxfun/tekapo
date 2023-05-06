@@ -7,29 +7,20 @@ import com.google.gson.annotations.SerializedName;
 
 public class QuizQuestions {
 
-    @SerializedName("response_code")
+    @SerializedName("choices")
     @Expose
-    private Integer responseCode;
-    @SerializedName("results")
-    @Expose
-    private List<Result> results = null;
-
+    private List<Choice> choices;
 
     public QuizQuestions() {
     }
 
-    public QuizQuestions(Integer responseCode, List<Result> results) {
+    public QuizQuestions(Integer responseCode, List<Choice> choices) {
         super();
-        this.responseCode = responseCode;
-        this.results = results;
+        this.choices = choices;
     }
 
-    public Integer getResponseCode() {
-        return responseCode;
+    public List<Choice> getChoices() {
+        return choices;
     }
-
-    public List<Result> getResults() {
-        return results;
-    }
-
 }
+
