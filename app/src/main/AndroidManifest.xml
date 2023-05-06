@@ -19,6 +19,7 @@
             android:label="Solutions"
             android:screenOrientation="portrait" />
         <activity
+            android:exported="true"
             android:name=".HomeActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
