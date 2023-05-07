@@ -115,8 +115,8 @@ public class HomeActivity extends AppCompatActivity {
 
 	public void fetchQuestionAPI() {
 		Random rnd = new Random();
-		boolean isJapanese = false;// rnd.nextInt(6) >= 5 ? true : false;
-		boolean isMultichoice = rnd.nextInt(5) >= 2 ? true : false;
+		boolean isJapanese = false;// rnd.nextInt(6) >= 5 ? true : false;　// TODO: handle Japanese responses later
+		boolean isMultichoice = true; //rnd.nextInt(5) >= 2 ? true : false; // TODO: handle true/false responses later
 		String topic;
 		switch (rnd.nextInt(12)) {
 			case 0: topic = "science"; break;
