@@ -68,6 +68,7 @@ public class HomeActivity extends AppCompatActivity {
 //		Log.e("aeh", m.group(3));
 //		Log.e("aeh", m.group(4));
 //		Log.e("aeh", m.group(5));
+
 		setContentView(R.layout.activity_home);
 		setFilterDefaultValues();
 		start = findViewById(R.id.home_start);
