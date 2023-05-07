@@ -20,6 +20,8 @@ import com.example.immadisairaj.quiz.question.Question;
 
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -55,6 +57,17 @@ public class HomeActivity extends AppCompatActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+
+		// Testing ChatGPT-generated regex answer
+		// https://twitter.com/WanderingIshiki/status/1655141350835367937?s=20
+//		Pattern p = Pattern.compile("Problem:\\s+(.+)\\s+A.\\s+(.+)\\s+B.\\s+(.+)\\s+C.\\s+(.+)\\s+Answer:\\s+(.+)\\s+");
+//		Matcher m = p.matcher("Problem: What should you do if you start feeling tired while playing video games?\n\nA. Keep playing until you win\nB. Take a break and rest your eyes and body\nC. Drink a lot of soda \n\nAnswer: B. Take a break and rest your eyes and body");
+//		m.find();
+//		Log.e("aeh", m.group(1));
+//		Log.e("aeh", m.group(2));
+//		Log.e("aeh", m.group(3));
+//		Log.e("aeh", m.group(4));
+//		Log.e("aeh", m.group(5));
 		setContentView(R.layout.activity_home);
 		setFilterDefaultValues();
 		start = findViewById(R.id.home_start);
