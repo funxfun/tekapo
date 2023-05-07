@@ -11,10 +11,8 @@ import java.util.List;
 public class Question implements  Serializable {
 
     public transient Context context;
-    public List<Result> results;
 
     public List<String> question;
-
 
     public List<String> optA;
     public List<String> optB;
@@ -29,7 +27,6 @@ public class Question implements  Serializable {
     public Question(Context context) {
         this.context = context;
         question = new ArrayList<>();
-        results = new ArrayList<>();
         optA = new ArrayList<>();
         optB = new ArrayList<>();
         optC = new ArrayList<>();

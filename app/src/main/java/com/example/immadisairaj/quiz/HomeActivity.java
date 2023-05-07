@@ -13,12 +13,15 @@ import android.widget.Toast;
 
 import com.example.immadisairaj.quiz.api.Api;
 import com.example.immadisairaj.quiz.api.Message;
+import com.example.immadisairaj.quiz.api.QnA;
 import com.example.immadisairaj.quiz.api.QuizQuestions;
 import com.example.immadisairaj.quiz.api.Request;
 import com.example.immadisairaj.quiz.api.Result;
 import com.example.immadisairaj.quiz.question.Question;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -136,11 +139,11 @@ public class HomeActivity extends AppCompatActivity {
 				topic = "math"; break;
 		}
 
-		Message problem = new Message("user", "Give a problem with the solution on the topic of "
+		Message problem = new Message("user", "Give a problem and the answer on the topic of "
 				+ topic
 				+ ", in " + (isMultichoice ? "multi-choice" : "true/false") + " format"
 				+ ", " + (isJapanese ? " suitable for a 10 year old child, and in the Japanese language at a 10 year old reading level" :
-				"suitable for a kid aged between 5 and 9."));
+				"suitable for a kid aged between 5 and 9. Response must be in JSON format."));
 		ArrayList<Message> messages = new ArrayList<>();
 		messages.add(problem);
 		Request request = new Request("gpt-3.5-turbo", messages);
@@ -169,33 +172,18 @@ public class HomeActivity extends AppCompatActivity {
 
 				QuizQuestions quizQuestions = response.body();
 				String content = quizQuestions.getChoices().get(0).getMessage().getContent();
-				Toast.makeText(getApplicationContext(), content, Toast.LENGTH_LONG).show();
+				content = content.replaceAll("\n", "");
+				//Toast.makeText(getApplicationContext(), content, Toast.LENGTH_LONG).show();
+				Log.v("content", content);
 
-//				q.results = quizQuestions.getResults();
-//
-//				if (q.results != null) {
-//					for (Result r : q.results) {
-//						try {
-//							q.question.add(java.net.URLDecoder.decode(r.getQuestion(), "UTF-8"));
-//						} catch (UnsupportedEncodingException e) {
-//							e.printStackTrace();
-//						}
-//						Random random = new Random();
-//						// For Boolean Type Questions, only 2 possible options (True/False)
-//						// For multiple choices, 4 options are required.
-//						int ran = r.getType().equals("boolean")
-//								? random.nextInt(2)
-//								: random.nextInt(4);
-//						setOptions(r, ran);
-//						q.Answer.add(ran + 1);
-//					}
-//					Log.v("answers", q.Answer.toString());
-//				}
-//				progressBar.setVisibility(View.INVISIBLE);
-//				start.setClickable(true);
-//				Intent intent = new Intent(HomeActivity.this, QuizActivity.class);
-//				intent.putExtra("question", q);
-//				startActivity(intent);
+				Gson gson = new Gson();
+				QnA qNa = gson.fromJson(content, QnA.class);
+
+				progressBar.setVisibility(View.INVISIBLE);
+				start.setClickable(true);
+				Intent intent = new Intent(HomeActivity.this, QuizActivity.class);
+				intent.putExtra("question", q);
+				startActivity(intent);
 			}
 
 			@Override
