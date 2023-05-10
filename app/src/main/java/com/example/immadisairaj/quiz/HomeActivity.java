@@ -189,7 +189,7 @@ public class HomeActivity extends AppCompatActivity {
 					q.Answer.add(qNa.getAnswerIndex());
 				} catch (Exception e) {
 					e.printStackTrace();
-					Toast.makeText(getApplicationContext(), "Parse error. Trying again...: " + e.getMessage(), Toast.LENGTH_LONG).show();
+					Toast.makeText(getApplicationContext(), "Parse error. Try again.: " + e.getMessage(), Toast.LENGTH_LONG).show();
 					progressBar.setVisibility(View.INVISIBLE);
 					start.setClickable(true);
 					return;
