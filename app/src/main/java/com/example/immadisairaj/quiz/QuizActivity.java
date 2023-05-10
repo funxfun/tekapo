@@ -96,8 +96,8 @@ public class QuizActivity extends AppCompatActivity {
 //			opC.setVisibility(View.GONE);
 //			opD.setVisibility(View.GONE);
 //		} else {
-//			opC.setVisibility(View.VISIBLE);
-//			opD.setVisibility(View.VISIBLE);
+			opC.setVisibility(View.VISIBLE);
+			opD.setVisibility(View.VISIBLE);
 //		}
 
 		q_nos = "Question: " + (ques + 1) + "/" + qAndA.question.size();
@@ -177,8 +177,8 @@ public class QuizActivity extends AppCompatActivity {
 //			opC.setVisibility(View.GONE);
 //			opD.setVisibility(View.GONE);
 //		} else {
-//			opC.setVisibility(View.VISIBLE);
-//			opD.setVisibility(View.VISIBLE);
+			opC.setVisibility(View.VISIBLE);
+			opD.setVisibility(View.VISIBLE);
 //		}
 
 		q_nos = "Question: " + (ques + 1) + "/" + qAndA.question.size();
