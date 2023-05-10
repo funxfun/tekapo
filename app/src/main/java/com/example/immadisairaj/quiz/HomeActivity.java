@@ -181,10 +181,10 @@ public class HomeActivity extends AppCompatActivity {
 					QnA qNa = gson.fromJson(content, QnA.class);
 
 					q.question.add(qNa.getProblem());
-					if (qNa.getChoices().size() == 1 && qNa.getChoices().get(0) != null) q.optA.add(qNa.getChoices().get(0));
-					if (qNa.getChoices().size() <= 2 && qNa.getChoices().get(1) != null) q.optA.add(qNa.getChoices().get(1));
-					if (qNa.getChoices().size() <= 3 && qNa.getChoices().get(2) != null) q.optA.add(qNa.getChoices().get(2));
-					if (qNa.getChoices().size() <= 4 && qNa.getChoices().get(3) != null) q.optA.add(qNa.getChoices().get(3));
+					q.optA.add(qNa.getChoices().get(0));
+					q.optB.add(qNa.getChoices().get(1));
+					q.optC.add(qNa.getChoices().get(2));
+					q.optD.add(qNa.getChoices().get(3));
 
 					q.Answer.add(qNa.getAnswerIndex());
 				} catch (Exception e) {
