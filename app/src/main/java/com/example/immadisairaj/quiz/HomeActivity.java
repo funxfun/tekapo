@@ -242,6 +242,7 @@ public class HomeActivity extends AppCompatActivity {
 					if (problems == null || problems.size() == 0) {
 						throw new IllegalStateException("Non-parseable problems response");
 					}
+					Collections.shuffle(problems);
 					for (int i = 0; i < (problems.size() < numProbs ? problems.size() : numProbs); i++) {
 						q.question.add(problems.get(i).getProblem());
 						q.optA.add(problems.get(i).getChoices().get(0));
