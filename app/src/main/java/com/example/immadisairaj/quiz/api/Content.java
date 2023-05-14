@@ -298,6 +298,49 @@ public class Content {
 
 
 
+     @SerializedName("Problem1")
+     @Expose
+     private Problem Problem1;
+
+     @SerializedName("Problem2")
+     @Expose
+     private Problem Problem2;
+
+     @SerializedName("Problem3")
+     @Expose
+     private Problem Problem3;
+
+     @SerializedName("Problem4")
+     @Expose
+     private Problem Problem4;
+
+     @SerializedName("Problem5")
+     @Expose
+     private Problem Problem5;
+
+     @SerializedName("Problem6")
+     @Expose
+     private Problem Problem6;
+
+     @SerializedName("Problem7")
+     @Expose
+     private Problem Problem7;
+
+     @SerializedName("Problem8")
+     @Expose
+     private Problem Problem8;
+
+     @SerializedName("Problem9")
+     @Expose
+     private Problem Problem9;
+
+     @SerializedName("Problem10")
+     @Expose
+     private Problem Problem10;
+
+
+
+
      @SerializedName("1. Educational problem")
      @Expose
      private Problem Educationalproblem1;
@@ -447,6 +490,26 @@ public class Content {
                     if (problem8 != null) problems.add(problem8);
                     if (problem9 != null) problems.add(problem9);
                     if (problem10 != null) problems.add(problem10);
+          } else if (Problem1 != null ||
+                  Problem2 != null ||
+                  Problem3 != null ||
+                  Problem4 != null ||
+                  Problem5 != null ||
+                  Problem6 != null ||
+                  Problem7 != null ||
+                  Problem8 != null ||
+                  Problem9 != null ||
+                  Problem10 != null) {
+                    if (Problem1 != null) problems.add(Problem1);
+                    if (Problem2 != null) problems.add(Problem2);
+                    if (Problem3 != null) problems.add(Problem3);
+                    if (Problem4 != null) problems.add(Problem4);
+                    if (Problem5 != null) problems.add(Problem5);
+                    if (Problem6 != null) problems.add(Problem6);
+                    if (Problem7 != null) problems.add(Problem7);
+                    if (Problem8 != null) problems.add(Problem8);
+                    if (Problem9 != null) problems.add(Problem9);
+                    if (Problem10 != null) problems.add(Problem10);
           } else if (Question1 != null ||
                   Question2 != null ||
                   Question3 != null ||
