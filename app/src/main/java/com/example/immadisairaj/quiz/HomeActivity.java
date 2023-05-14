@@ -228,6 +228,7 @@ public class HomeActivity extends AppCompatActivity {
 						// "Sorry, as an AI language model I don't provide JSON format."
 						// So force a retry
 						Toast.makeText(getApplicationContext(), "Retrying coz of uncooperative AI model: " + contentStr, Toast.LENGTH_LONG).show();
+						Thread.sleep(20000); // avoid API call threshold limits
 						fetchQuestionAPI();
 						return;
 					}
