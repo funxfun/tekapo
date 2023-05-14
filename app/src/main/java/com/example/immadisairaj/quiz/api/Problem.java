@@ -1,35 +1,58 @@
 package com.example.immadisairaj.quiz.api;
 
 import java.util.List;
-import java.util.Locale;
 
-public class QnA {
+public class Problem {
     private String problem;
     private String question;
+    private String Problem;
+    private String Question;
 
     public String getProblem() {
         if (question != null)
             return question;
+        if (Problem != null)
+            return Problem;
+        if (Question != null)
+            return Question;
 
         return problem;
     }
 
     private List<String> choices;
     private List<String> options;
+    private List<String> answers;
+    private List<String> Choices;
+    private List<String> Options;
+    private List<String> Answers;
 
     public List<String> getChoices() {
         if (options != null)
             return options;
+        if (answers != null)
+            return answers;
+        if (Choices != null)
+            return Choices;
+        if (Options != null)
+            return Options;
+        if (Answers != null)
+            return Answers;
 
         return choices;
     }
 
     private String answer;
     private String solution;
+    private String Answer;
+    private String Solution;
 
     public String getAnswerString() {
         if (solution != null)
             return solution;
+        if (Answer != null)
+            return Answer;
+        if (Solution != null)
+            return Solution;
 
         return answer;
     }
@@ -38,6 +61,10 @@ public class QnA {
         String answer = this.answer;
         if (solution != null)
             answer = solution;
+        if (Answer != null)
+            answer = Answer;
+        if (Solution != null)
+            answer = Solution;
 
         if (getChoices().size() == 1 && answer.toLowerCase().equals(getChoices().get(0).toLowerCase()))
             return 0;

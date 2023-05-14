@@ -13,18 +13,19 @@ import android.widget.Toast;
 
 import com.example.immadisairaj.quiz.api.Api;
 import com.example.immadisairaj.quiz.api.Message;
-import com.example.immadisairaj.quiz.api.QnA;
+import com.example.immadisairaj.quiz.api.Content;
+import com.example.immadisairaj.quiz.api.Problem;
 import com.example.immadisairaj.quiz.api.QuizQuestions;
 import com.example.immadisairaj.quiz.api.Request;
 import com.example.immadisairaj.quiz.api.Result;
 import com.example.immadisairaj.quiz.question.Question;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.List;
 import java.util.Random;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import java.util.concurrent.TimeUnit;
 
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -56,6 +57,8 @@ public class HomeActivity extends AppCompatActivity {
 			}
 		}
 	};
+//	int numberApiCalls = 0;
+//	int numberApiErrs = 0;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -117,40 +120,79 @@ public class HomeActivity extends AppCompatActivity {
 	}
 
 	public void fetchQuestionAPI() {
+//		if (numberApiErrs > 3) {
+//			numberApiCalls = 0;
+//			numberApiErrs = 0;
+//			Toast.makeText(getApplicationContext(), "Reached MAX number of API errors", Toast.LENGTH_LONG).show();
+//			progressBar.setVisibility(View.INVISIBLE);
+//			start.setClickable(true);
+//			return;
+//		}
+
 		Random rnd = new Random();
 		boolean isJapanese = false;// rnd.nextInt(6) >= 5 ? true : false;　// TODO: handle Japanese responses later
 		boolean isMultichoice = true; //rnd.nextInt(5) >= 2 ? true : false; // TODO: handle true/false responses later
-		String topic;
-		switch (rnd.nextInt(12)) {
-			case 0: topic = "science"; break;
-			case 1: topic = "computers"; break;
-			case 2: topic = "nature"; break;
-			case 3: topic = "famous people"; break;
-			case 4: topic = "video games"; break;
-			case 5: topic = "anime and manga"; break;
-			case 6: topic = "technology"; break;
-			case 7: topic = "programming"; break;
+		int numProbs = 10;
+		ArrayList<String> topics = new ArrayList<String>();
+		for (int i = 0; i < numProbs; i++) {
+			switch (rnd.nextInt(12)) {
 
-			default:
-			case 8:
-			case 9:
-			case 10:
-			case 11:
-				topic = "math"; break;
+				// TODO: topics are hardcoded in Content.java model class for now so ensure they're in sync. Make 'em dynamic one day.
+				case 0:
+					topics.add("science");
+					break;
+				case 1:
+					topics.add("computers");
+					break;
+				case 2:
+					topics.add("nature");
+					break;
+				case 3:
+					topics.add("famous people");
+					break;
+				case 4:
+					topics.add("video games");
+					break;
+				case 5:
+					topics.add("anime and manga");
+					break;
+				case 6:
+					topics.add("technology");
+					break;
+				case 7:
+					topics.add("programming");
+					break;
+
+				default:
+				case 8:
+				case 9:
+				case 10:
+				case 11:
+					topics.add("math");
+					break;
+			}
 		}
 
-		Message problem = new Message("user", "Give a problem and the answer on the topic of "
-				+ topic
-				+ ", in " + (isMultichoice ? "multi-choice" : "true/false") + " format"
-				+ ", " + (isJapanese ? " suitable for a 10 year old child, and in the Japanese language at a 10 year old reading level" :
-				"suitable for a kid aged between 5 and 9. Response must be in JSON format."));
+		String problem = "Give " + numProbs + " educational problems and their answers on the topics of "
+				+ String.join(", ", topics) + "."
+				+ "Answers must be in " + (isMultichoice ? "4 multi-choice" : "true/false") + " format."
+				+ " The content must be " +
+				(isJapanese ? 	"suitable for a 12 year old boy, and in the Japanese language at a 12 year old reading level." :
+						"suitable for a 12 year old boy.")
+				+ " Responses must be in JSON format.";
+		Log.v("problem", problem);
+
+		Message message = new Message("user", problem);
 		ArrayList<Message> messages = new ArrayList<>();
-		messages.add(problem);
+		messages.add(message);
 		Request request = new Request("gpt-3.5-turbo", messages);
 
 		HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
 		interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
 		OkHttpClient client = new OkHttpClient.Builder()
+				.connectTimeout(120, TimeUnit.SECONDS)
+				.writeTimeout(120, TimeUnit.SECONDS)
+				.readTimeout(120, TimeUnit.SECONDS)
 				.addInterceptor(interceptor).build();
 
 		Retrofit retrofit = new Retrofit.Builder()
@@ -170,30 +212,58 @@ public class HomeActivity extends AppCompatActivity {
 
 				Log.v("url-----", call.request().url().toString());
 
+				String contentStr;
+				Content content;
 				try {
 					QuizQuestions quizQuestions = response.body();
-					String content = quizQuestions.getChoices().get(0).getMessage().getContent();
-					content = content.replaceAll("\n", "");
-					//Toast.makeText(getApplicationContext(), content, Toast.LENGTH_LONG).show();
-					Log.v("content", content);
+					contentStr = quizQuestions.getChoices().get(0).getMessage().getContent();
+					contentStr = contentStr.replaceAll("\n", "");
+					contentStr = contentStr.replaceAll("\t", "");
+					Log.v("content", contentStr);
 
-					Gson gson = new Gson();
-					QnA qNa = gson.fromJson(content, QnA.class);
+					if (contentStr.toLowerCase().contains("as an ai language model") || contentStr.contains("generate inappropriate content")) {
+						// Sometimes we get silly responses like;
+						// "As an AI language model I apologize as I cannot generate inappropriate or incorrect content, particularly for a 12 year old child."
+						// or
+						// "Sorry, as an AI language model I don't provide JSON format."
+						// So force a retry
+						Toast.makeText(getApplicationContext(), "Retrying coz of uncooperative AI model: " + contentStr, Toast.LENGTH_LONG).show();
+						fetchQuestionAPI();
+						return;
+					}
 
-					q.question.add(qNa.getProblem());
-					q.optA.add(qNa.getChoices().get(0));
-					q.optB.add(qNa.getChoices().get(1));
-					q.optC.add(qNa.getChoices().get(2));
-					q.optD.add(qNa.getChoices().get(3));
+					GsonBuilder gsonBuilder = new GsonBuilder();
+					gsonBuilder.setLenient();
+					Gson gson = gsonBuilder.create();
+					content = gson.fromJson(contentStr, Content.class);
 
-					q.Answer.add(qNa.getAnswerIndex());
+					List<Problem> problems = content.getProblems();
+					if (problems == null || problems.size() == 0) {
+						throw new IllegalStateException("Non-parseable problems response");
+					}
+					for (int i = 0; i < problems.size(); i++) {
+						q.question.add(problems.get(i).getProblem());
+						q.optA.add(problems.get(i).getChoices().get(0));
+						q.optB.add(problems.get(i).getChoices().get(1));
+						q.optC.add(problems.get(i).getChoices().get(2));
+						q.optD.add(problems.get(i).getChoices().get(3));
+						q.Answer.add(problems.get(i).getAnswerIndex());
+					}
 				} catch (Exception e) {
+//					numberApiErrs++;
 					e.printStackTrace();
-					Toast.makeText(getApplicationContext(), "Parse error. Try again.: " + e.getMessage(), Toast.LENGTH_LONG).show();
-					progressBar.setVisibility(View.INVISIBLE);
-					start.setClickable(true);
+					Toast.makeText(getApplicationContext(), "Trying again. Error: " + e.getMessage(), Toast.LENGTH_LONG).show();
+					fetchQuestionAPI();
 					return;
 				}
+
+//				if (numberApiCalls < 3) {
+//					numberApiCalls++;
+//					numberApiErrs = 0;
+//					Toast.makeText(getApplicationContext(), "API call #" + (numberApiCalls + 1), Toast.LENGTH_SHORT).show();
+//					fetchQuestionAPI();
+//					return;
+//				}
 
 				progressBar.setVisibility(View.INVISIBLE);
 				start.setClickable(true);
@@ -204,6 +274,8 @@ public class HomeActivity extends AppCompatActivity {
 
 			@Override
 			public void onFailure(Call<QuizQuestions> call, Throwable t) {
+//				numberApiErrs++;
+//				fetchQuestionAPI();
 				Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
 				progressBar.setVisibility(View.INVISIBLE);
 				start.setClickable(true);
