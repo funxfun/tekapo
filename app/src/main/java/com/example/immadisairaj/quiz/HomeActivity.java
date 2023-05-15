@@ -217,6 +217,19 @@ public class HomeActivity extends AppCompatActivity {
 				Content content;
 				try {
 					QuizQuestions quizQuestions = response.body();
+
+					try {
+						if (quizQuestions.getError() != null && quizQuestions.getError().getMessage() != null &&
+								quizQuestions.getError().getMessage().toLowerCase().contains("rate limit reached")) {
+							Toast.makeText(getApplicationContext(), "Rate limit reached", Toast.LENGTH_LONG).show();
+							Thread.sleep(20000); // avoid API call threshold limits
+							fetchQuestionAPI();
+							return;
+						}
+					} catch (NullPointerException npe) {
+						npe.printStackTrace();
+					}
+
 					contentStr = quizQuestions.getChoices().get(0).getMessage().getContent();
 					contentStr = contentStr.replaceAll("\n", "");
 					contentStr = contentStr.replaceAll("\t", "");

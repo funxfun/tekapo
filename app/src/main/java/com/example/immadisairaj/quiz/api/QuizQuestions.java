@@ -22,5 +22,13 @@ public class QuizQuestions {
     public List<Choice> getChoices() {
         return choices;
     }
+
+    @SerializedName("error")
+    @Expose
+    private Error error;
+
+    public Error getError() {
+        return error;
+    }
 }
 
