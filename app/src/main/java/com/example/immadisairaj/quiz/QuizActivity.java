@@ -324,7 +324,7 @@ public class QuizActivity extends AppCompatActivity {
 	public void checkScore() {
 		if (ques != -1)
 			for (int i = 0; i < Answers.size(); i++) {
-				if (qAndA.Answer.get(i).equals(Answers.get(i))) {
+				if (qAndA.Answer.get(i).equals(Answers.get(i) - 1)) {
 					score++;
 				}
 			}

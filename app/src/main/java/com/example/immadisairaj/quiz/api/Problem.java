@@ -66,13 +66,13 @@ public class Problem {
         if (Solution != null)
             answer = Solution;
 
-        if (getChoices().size() == 1 && answer.toLowerCase().equals(getChoices().get(0).toLowerCase()))
+        if (answer.toLowerCase().equals(getChoices().get(0).toLowerCase()))
             return 0;
-        if (getChoices().size() <= 2 && answer.toLowerCase().equals(getChoices().get(1).toLowerCase()))
+        if (answer.toLowerCase().equals(getChoices().get(1).toLowerCase()))
             return 1;
-        if (getChoices().size() <= 3 && answer.toLowerCase().equals(getChoices().get(2).toLowerCase()))
+        if (answer.toLowerCase().equals(getChoices().get(2).toLowerCase()))
             return 2;
-        if (getChoices().size() <= 4 && answer.toLowerCase().equals(getChoices().get(3).toLowerCase()))
+        if (answer.toLowerCase().equals(getChoices().get(3).toLowerCase()))
             return 3;
 
         if ("a".equals(answer.toLowerCase().charAt(0)))
