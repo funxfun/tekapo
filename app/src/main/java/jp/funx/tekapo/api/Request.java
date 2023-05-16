@@ -1,4 +1,4 @@
-package com.example.immadisairaj.quiz.api;
+package jp.funx.tekapo.api;
 
 import java.util.ArrayList;
 import java.util.List;

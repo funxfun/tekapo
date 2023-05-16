@@ -1,8 +1,6 @@
-package com.example.immadisairaj.quiz.question;
+package jp.funx.tekapo.question;
 
 import android.content.Context;
-
-import com.example.immadisairaj.quiz.api.Result;
 
 import java.io.Serializable;
 import java.util.ArrayList;

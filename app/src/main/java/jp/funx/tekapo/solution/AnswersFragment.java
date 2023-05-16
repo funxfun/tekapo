@@ -1,4 +1,4 @@
-package com.example.immadisairaj.quiz.solution;
+package jp.funx.tekapo.solution;
 
 
 import android.os.Bundle;
@@ -10,9 +10,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.immadisairaj.quiz.R;
-import com.example.immadisairaj.quiz.SolutionActivity;
-import com.example.immadisairaj.quiz.question.Question;
+import jp.funx.tekapo.R;
+import jp.funx.tekapo.SolutionActivity;
+import jp.funx.tekapo.question.Question;
 
 import java.util.ArrayList;
 

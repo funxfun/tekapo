@@ -1,6 +1,4 @@
-package com.example.immadisairaj.quiz.api;
-
-import java.util.List;
+package jp.funx.tekapo.api;
 
 import retrofit2.Call;
 import retrofit2.http.Body;

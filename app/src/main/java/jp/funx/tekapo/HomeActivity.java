@@ -1,4 +1,4 @@
-package com.example.immadisairaj.quiz;
+package jp.funx.tekapo;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -11,14 +11,14 @@ import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import com.example.immadisairaj.quiz.api.Api;
-import com.example.immadisairaj.quiz.api.Message;
-import com.example.immadisairaj.quiz.api.Content;
-import com.example.immadisairaj.quiz.api.Problem;
-import com.example.immadisairaj.quiz.api.QuizQuestions;
-import com.example.immadisairaj.quiz.api.Request;
-import com.example.immadisairaj.quiz.api.Result;
-import com.example.immadisairaj.quiz.question.Question;
+import jp.funx.tekapo.api.Api;
+import jp.funx.tekapo.api.Message;
+import jp.funx.tekapo.api.Content;
+import jp.funx.tekapo.api.Problem;
+import jp.funx.tekapo.api.QuizQuestions;
+import jp.funx.tekapo.api.Request;
+import jp.funx.tekapo.api.Result;
+import jp.funx.tekapo.question.Question;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -206,10 +206,10 @@ public class HomeActivity extends AppCompatActivity {
 				.build();
 		Api api = retrofit.create(Api.class);
 		Call<QuizQuestions> call = api.getQuizQuestions(
-				"Bearer [API KEY]",
+				"Bearer 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",
 				"application/json",
 				request
-				);
+		);
 		call.enqueue(new Callback<QuizQuestions>() {
 			@Override
 			public void onResponse(Call<QuizQuestions> call, Response<QuizQuestions> response) {

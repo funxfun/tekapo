@@ -33,7 +33,7 @@
             android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.example.immadisairaj.quiz.HomeActivity"/>
+                android:value="jp.funx.tekapo.HomeActivity"/>
     </activity>
     </application>
 

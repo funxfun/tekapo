@@ -1,4 +1,4 @@
-package com.example.immadisairaj.quiz;
+package jp.funx.tekapo;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -15,7 +15,7 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.immadisairaj.quiz.question.Question;
+import jp.funx.tekapo.question.Question;
 
 import java.util.ArrayList;
 
@@ -209,7 +209,7 @@ public class QuizActivity extends AppCompatActivity {
 	public void clickSubmit(final View view) {
 		AlertDialog.Builder alertConfirm = new AlertDialog.Builder(this);
 		alertConfirm.setTitle("Confirm Submission");
-		alertConfirm.setMessage("Do you want to submit quiz?");
+		alertConfirm.setMessage("Do you want to submit jp.funx.tekapo?");
 		alertConfirm.setCancelable(true);
 		alertConfirm.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
 			@Override

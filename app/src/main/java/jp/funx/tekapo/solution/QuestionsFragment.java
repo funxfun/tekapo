@@ -1,4 +1,4 @@
-package com.example.immadisairaj.quiz.solution;
+package jp.funx.tekapo.solution;
 
 import android.os.Bundle;
 import androidx.annotation.NonNull;
@@ -9,8 +9,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.immadisairaj.quiz.R;
-import com.example.immadisairaj.quiz.SolutionActivity;
+import jp.funx.tekapo.R;
+import jp.funx.tekapo.SolutionActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

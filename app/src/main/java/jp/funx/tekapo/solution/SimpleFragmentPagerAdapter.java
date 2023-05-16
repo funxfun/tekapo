@@ -1,4 +1,4 @@
-package com.example.immadisairaj.quiz.solution;
+package jp.funx.tekapo.solution;
 
 import android.content.Context;
 import androidx.annotation.Nullable;
@@ -6,7 +6,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
-import com.example.immadisairaj.quiz.R;
+import jp.funx.tekapo.R;
 
 public class SimpleFragmentPagerAdapter extends FragmentPagerAdapter {
 

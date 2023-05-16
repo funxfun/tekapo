@@ -1,4 +1,4 @@
-package com.example.immadisairaj.quiz.solution;
+package jp.funx.tekapo.solution;
 
 import android.graphics.Color;
 import androidx.annotation.NonNull;
@@ -8,7 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.example.immadisairaj.quiz.R;
+import jp.funx.tekapo.R;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,4 +1,4 @@
-package com.example.immadisairaj.quiz.api;
+package jp.funx.tekapo.api;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

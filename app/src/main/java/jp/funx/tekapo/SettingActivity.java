@@ -1,4 +1,4 @@
-package com.example.immadisairaj.quiz;
+package jp.funx.tekapo;
 
 import android.content.SharedPreferences;
 

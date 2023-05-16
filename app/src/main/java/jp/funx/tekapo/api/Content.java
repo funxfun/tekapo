@@ -1,10 +1,8 @@
-package com.example.immadisairaj.quiz.api;
+package jp.funx.tekapo.api;
 
-import com.example.immadisairaj.quiz.question.Question;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-import java.util.AbstractList;
 import java.util.ArrayList;
 import java.util.List;
 
