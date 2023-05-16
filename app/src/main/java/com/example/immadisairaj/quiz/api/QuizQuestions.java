@@ -14,21 +14,13 @@ public class QuizQuestions {
     public QuizQuestions() {
     }
 
-    public QuizQuestions(Integer responseCode, List<Choice> choices) {
+    public QuizQuestions(List<Choice> choices) {
         super();
         this.choices = choices;
     }
 
     public List<Choice> getChoices() {
         return choices;
-    }
-
-    @SerializedName("error")
-    @Expose
-    private Error error;
-
-    public Error getError() {
-        return error;
     }
 }
 

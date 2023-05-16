@@ -22,6 +22,9 @@ import com.example.immadisairaj.quiz.question.Question;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -218,16 +221,23 @@ public class HomeActivity extends AppCompatActivity {
 				try {
 					QuizQuestions quizQuestions = response.body();
 
-					try {
-						if (quizQuestions.getError() != null && quizQuestions.getError().getMessage() != null &&
-								quizQuestions.getError().getMessage().toLowerCase().contains("rate limit reached")) {
-							Toast.makeText(getApplicationContext(), "Rate limit reached", Toast.LENGTH_LONG).show();
-							Thread.sleep(20000); // avoid API call threshold limits
-							fetchQuestionAPI();
-							return;
+					if (response.errorBody() != null) {
+						BufferedReader reader = null;
+						StringBuilder sb = new StringBuilder();
+						try {
+							reader = new BufferedReader(new InputStreamReader(response.errorBody().byteStream()));
+							String line;
+							while ((line = reader.readLine()) != null) {
+								sb.append(line);
+							}
+						} catch (IOException e) {
+							e.printStackTrace();
 						}
-					} catch (NullPointerException npe) {
-						npe.printStackTrace();
+						String finallyError = sb.toString();
+						Toast.makeText(getApplicationContext(),  finallyError, Toast.LENGTH_LONG).show();
+						Thread.sleep(20000); // avoid API call threshold limits
+						fetchQuestionAPI();
+						return;
 					}
 
 					contentStr = quizQuestions.getChoices().get(0).getMessage().getContent();
