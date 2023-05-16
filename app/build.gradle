@@ -3,7 +3,7 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion 32
     defaultConfig {
-        applicationId "jp.funx.jp.funx.tekapo"
+        applicationId "jp.funx.tekapo"
         minSdkVersion 17
         targetSdkVersion 32
         versionCode 1
@@ -65,4 +65,5 @@ dependencies {
     implementation 'com.squareup.retrofit2:retrofit:2.3.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.2.0'
     implementation 'com.squareup.okhttp3:logging-interceptor:3.5.0'
+    implementation 'androidx.leanback:leanback:1.0.0'
 }
