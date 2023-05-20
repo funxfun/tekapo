@@ -251,7 +251,9 @@ public class HomeActivity extends AppCompatActivity {
 					contentStr = contentStr.replaceAll("\t", "");
 					Log.v("content", contentStr);
 
-					if (contentStr.toLowerCase().contains("as an ai language model") || contentStr.contains("generate inappropriate content")) {
+					if (contentStr.toLowerCase().contains("as an ai language model")
+							|| contentStr.toLowerCase().contains("inaccurate content")
+							|| contentStr.toLowerCase().contains("inappropriate content")) {
 						// Sometimes we get silly responses like;
 						// "As an AI language model I apologize as I cannot generate inappropriate or incorrect content, particularly for a 12 year old child."
 						// or
