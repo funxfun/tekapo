@@ -97,6 +97,12 @@ public class HomeActivity extends AppCompatActivity {
 				getString(R.string.difficulty_key),
 				getString(R.string.medium_value)
 		);
+
+		// Start the quiz immediately
+		progressBar.setVisibility(View.VISIBLE);
+		q = new Question(getApplicationContext());
+		start.setClickable(false);
+		fetchQuestionAPI();
 	}
 
 	private void setFilterDefaultValues() {
