@@ -101,23 +101,29 @@ public class HomeActivity extends FragmentActivity {
 		);
 
 
-		// Test with dummy question
+		// Test with dummy questions
 		Intent intent = new Intent(HomeActivity.this, QuizActivity.class);
 		q = new Question(getApplicationContext());
-		q.question.add("What is the correct answer (test question)?");
-		q.optA.add("1. Answer 1");
+		q.question.add("Q1. What is the correct answer (test question)?");
+		q.optA.add("1. Answer 1 [correct one]");
 		q.optB.add("2. Answer 2");
 		q.optC.add("3. Answer 3");
 		q.optD.add("4. Answer 4");
 		q.Answer.add(1);
+		q.question.add("Q2. What is the correct answer (test question)?");
+		q.optA.add("1. Answer 1");
+		q.optB.add("2. Answer 2");
+		q.optC.add("3. Answer 3");
+		q.optD.add("4. Answer 4 [correct one]");
+		q.Answer.add(4);
 		intent.putExtra("question", q);
 		startActivity(intent);
 
 		// Start the quiz immediately
-		progressBar.setVisibility(View.VISIBLE);
-		q = new Question(getApplicationContext());
-		start.setClickable(false);
-		fetchQuestionAPI();
+//		progressBar.setVisibility(View.VISIBLE);
+//		q = new Question(getApplicationContext());
+//		start.setClickable(false);
+//		fetchQuestionAPI();
 	}
 
 	private void setFilterDefaultValues() {
