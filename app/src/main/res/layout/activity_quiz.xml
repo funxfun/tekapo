@@ -17,7 +17,8 @@
         android:onClick="clickNext"
         android:padding="5dp"
         android:text="@string/next"
-        android:textColor="@color/colorPrimaryDark"
+        android:textColor="@drawable/button_selector"
+        android:buttonTint="@drawable/button_selector"
         android:visibility="visible" />
 
     <Button
@@ -31,7 +32,8 @@
         android:onClick="clickPrev"
         android:padding="5dp"
         android:text="@string/prev"
-        android:textColor="@color/colorPrimaryDark"
+        android:textColor="@drawable/button_selector"
+        android:buttonTint="@drawable/button_selector"
         android:visibility="visible" />
 
     <Button
@@ -45,7 +47,8 @@
         android:onClick="clickSubmit"
         android:padding="5dp"
         android:text="@string/submit"
-        android:textColor="@color/colorPrimaryDark"
+        android:textColor="@drawable/button_selector"
+        android:buttonTint="@drawable/button_selector"
         android:visibility="invisible" />
 
     <androidx.core.widget.NestedScrollView
@@ -89,8 +92,8 @@
                     android:layout_height="@dimen/_70dp"
                     android:background="@drawable/roundable"
                     android:padding="10dp"
-                    android:textColor="@drawable/radio_button_selector"
-                    android:buttonTint="@drawable/radio_button_selector"
+                    android:textColor="@drawable/button_selector"
+                    android:buttonTint="@drawable/button_selector"
                     android:textSize="15sp">
                     <requestFocus/>
                 </RadioButton>
@@ -102,8 +105,8 @@
                     android:layout_marginTop="@dimen/_10dp"
                     android:background="@drawable/roundable"
                     android:padding="@dimen/_10dp"
-                    android:textColor="@drawable/radio_button_selector"
-                    android:buttonTint="@drawable/radio_button_selector"
+                    android:textColor="@drawable/button_selector"
+                    android:buttonTint="@drawable/button_selector"
                     android:textSize="@dimen/_15sp" />
 
                 <RadioButton
@@ -113,8 +116,8 @@
                     android:layout_marginTop="@dimen/_10dp"
                     android:background="@drawable/roundable"
                     android:padding="@dimen/_10dp"
-                    android:textColor="@drawable/radio_button_selector"
-                    android:buttonTint="@drawable/radio_button_selector"
+                    android:textColor="@drawable/button_selector"
+                    android:buttonTint="@drawable/button_selector"
                     android:textSize="@dimen/_15sp" />
 
                 <RadioButton
@@ -124,8 +127,8 @@
                     android:layout_marginTop="@dimen/_10dp"
                     android:background="@drawable/roundable"
                     android:padding="@dimen/_10dp"
-                    android:textColor="@drawable/radio_button_selector"
-                    android:buttonTint="@drawable/radio_button_selector"
+                    android:textColor="@drawable/button_selector"
+                    android:buttonTint="@drawable/button_selector"
                     android:textSize="@dimen/_15sp" />
 
             </RadioGroup>
