@@ -98,6 +98,19 @@ public class HomeActivity extends AppCompatActivity {
 				getString(R.string.medium_value)
 		);
 
+
+		// Test with dummy question
+		Intent intent = new Intent(HomeActivity.this, QuizActivity.class);
+		q = new Question(getApplicationContext());
+		q.question.add("What is the correct answer (test question)?");
+		q.optA.add("1. Answer 1");
+		q.optB.add("2. Answer 2");
+		q.optC.add("3. Answer 3");
+		q.optD.add("4. Answer 4");
+		q.Answer.add(1);
+		intent.putExtra("question", q);
+		startActivity(intent);
+
 		// Start the quiz immediately
 		progressBar.setVisibility(View.VISIBLE);
 		q = new Question(getApplicationContext());
