@@ -5,6 +5,8 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentActivity;
+
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -39,7 +41,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class HomeActivity extends AppCompatActivity {
+public class HomeActivity extends FragmentActivity {
 	Button start;
 	Button filter;
 	ProgressBar progressBar;

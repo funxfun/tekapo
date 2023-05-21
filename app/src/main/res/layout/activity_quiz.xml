@@ -89,7 +89,8 @@
                     android:layout_height="@dimen/_70dp"
                     android:background="@drawable/roundable"
                     android:padding="10dp"
-                    android:textColor="@color/colorPrimaryDark"
+                    android:textColor="@drawable/radio_button_selector"
+                    android:buttonTint="@drawable/radio_button_selector"
                     android:textSize="15sp" />
 
                 <RadioButton
@@ -99,7 +100,8 @@
                     android:layout_marginTop="@dimen/_10dp"
                     android:background="@drawable/roundable"
                     android:padding="@dimen/_10dp"
-                    android:textColor="@color/colorPrimaryDark"
+                    android:textColor="@drawable/radio_button_selector"
+                    android:buttonTint="@drawable/radio_button_selector"
                     android:textSize="@dimen/_15sp" />
 
                 <RadioButton
@@ -109,7 +111,8 @@
                     android:layout_marginTop="@dimen/_10dp"
                     android:background="@drawable/roundable"
                     android:padding="@dimen/_10dp"
-                    android:textColor="@color/colorPrimaryDark"
+                    android:textColor="@drawable/radio_button_selector"
+                    android:buttonTint="@drawable/radio_button_selector"
                     android:textSize="@dimen/_15sp" />
 
                 <RadioButton
@@ -119,7 +122,8 @@
                     android:layout_marginTop="@dimen/_10dp"
                     android:background="@drawable/roundable"
                     android:padding="@dimen/_10dp"
-                    android:textColor="@color/colorPrimaryDark"
+                    android:textColor="@drawable/radio_button_selector"
+                    android:buttonTint="@drawable/radio_button_selector"
                     android:textSize="@dimen/_15sp" />
 
             </RadioGroup>
