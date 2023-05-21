@@ -91,7 +91,9 @@
                     android:padding="10dp"
                     android:textColor="@drawable/radio_button_selector"
                     android:buttonTint="@drawable/radio_button_selector"
-                    android:textSize="15sp" />
+                    android:textSize="15sp">
+                    <requestFocus/>
+                </RadioButton>
 
                 <RadioButton
                     android:id="@+id/optionB"
