@@ -116,6 +116,12 @@ public class HomeActivity extends FragmentActivity {
 		q.optC.add("3. Answer 3");
 		q.optD.add("4. Answer 4 [correct one]");
 		q.Answer.add(3);
+		q.question.add("Q3. What is the correct answer (test question)?");
+		q.optA.add("1. Answer 1");
+		q.optB.add("2. Answer 2");
+		q.optC.add("3. Answer 3 [correct one]");
+		q.optD.add("4. Answer 4");
+		q.Answer.add(2);
 		intent.putExtra("question", q);
 		startActivity(intent);
 
