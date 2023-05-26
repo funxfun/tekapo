@@ -105,6 +105,7 @@ public class QuizActivity extends FragmentActivity {
 		q_no.setText(q_nos);
 		questions.setText(qAndA.question.get(ques));
 		opA.setText(qAndA.optA.get(ques));
+		opA.requestFocus();
 		opB.setText(qAndA.optB.get(ques));
 		opC.setText(qAndA.optC.get(ques));
 		opD.setText(qAndA.optD.get(ques));
@@ -186,6 +187,7 @@ public class QuizActivity extends FragmentActivity {
 		q_no.setText(q_nos);
 		questions.setText(qAndA.question.get(ques));
 		opA.setText(qAndA.optA.get(ques));
+		opA.requestFocus();
 		opB.setText(qAndA.optB.get(ques));
 		opC.setText(qAndA.optC.get(ques));
 		opD.setText(qAndA.optD.get(ques));

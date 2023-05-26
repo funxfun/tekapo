@@ -95,7 +95,6 @@
                     android:textColor="@drawable/button_selector"
                     android:buttonTint="@drawable/button_selector"
                     android:textSize="15sp">
-                    <requestFocus/>
                 </RadioButton>
 
                 <RadioButton
