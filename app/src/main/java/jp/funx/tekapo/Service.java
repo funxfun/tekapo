@@ -64,9 +64,9 @@ public class Service extends android.app.Service {
                 counter++;
                 Log.d(TAG,"handleMessage() - counter = " + counter);
                 if ( !isPIN && screenOn ) {
-                    if ( !MainActivity.active ) {
-                        Log.d(TAG, "handleMessage() activate MainActivity - isPIN = " + isPIN + " - MainActivity.active = " + MainActivity.active + " - screenOn = " + screenOn);
-                        Intent notificationIntent = new Intent(Service.this, MainActivity.class);
+                    if ( !TVLockActivity.active ) {
+                        Log.d(TAG, "handleMessage() activate TVLockActivity - isPIN = " + isPIN + " - TVLockActivity.active = " + TVLockActivity.active + " - screenOn = " + screenOn);
+                        Intent notificationIntent = new Intent(Service.this, TVLockActivity.class);
                         notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
                         PendingIntent pendingIntent = PendingIntent.getActivity(Service.this, 0, notificationIntent, 0);
                         try {
@@ -89,7 +89,7 @@ public class Service extends android.app.Service {
                 }
                 /*
                 try {
-                    Intent activityIntent = new Intent(Service.this, MainActivity.class);
+                    Intent activityIntent = new Intent(Service.this, TVLockActivity.class);
                     activityIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(activityIntent);
                     Thread.sleep(20000);
@@ -194,7 +194,7 @@ public class Service extends android.app.Service {
                 runflag = true;
                 screenOn = true;
                 Log.i(TAG,"Screen On intent received - screenOn = " + screenOn );
-                Intent notificationIntent = new Intent(Service.this, MainActivity.class);
+                Intent notificationIntent = new Intent(Service.this, TVLockActivity.class);
                 notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 PendingIntent pendingIntent = PendingIntent.getActivity(Service.this, 0, notificationIntent, 0);
                 try

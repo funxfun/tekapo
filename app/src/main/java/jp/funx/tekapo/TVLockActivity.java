@@ -15,14 +15,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import jp.funx.tekapo.R;
-
 /*
  * Main Activity class that loads {@link MainFragment}.
  */
-public class MainActivity extends Activity {
+public class TVLockActivity extends Activity {
 
-    final String TAG = "MainActivity";
+    final String TAG = "TVLockActivity";
     static boolean active = false;
 
     public TextView textViewBitte;
@@ -247,7 +245,7 @@ public class MainActivity extends Activity {
                     textViewStatus.setText(getString(R.string.TextOkPIN));
                     textViewStatus.setTextColor(getResources().getColor(color.white));
                     textViewBitte.setTextColor(getResources().getColor(color.white));
-                    MainActivity.super.moveTaskToBack(true);
+                    TVLockActivity.super.moveTaskToBack(true);
                     //finish();
                 }
                 else

@@ -13,7 +13,7 @@ public class Receiver extends android.content.BroadcastReceiver {
         Log.d(TAG,"onReceive() - " + intent.getAction() );
 
         /*
-        Intent activityIntent = new Intent(context, MainActivity.class);
+        Intent activityIntent = new Intent(context, TVLockActivity.class);
         activityIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(activityIntent);
         */
