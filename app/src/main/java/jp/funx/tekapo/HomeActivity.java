@@ -46,8 +46,6 @@ public class HomeActivity extends FragmentActivity {
 	Button filter;
 	ProgressBar progressBar;
 	Question q;
-	String difficulty;
-	String category;
 	View.OnClickListener onClickListener = new View.OnClickListener() {
 		@Override
 		public void onClick(View view) {
@@ -82,24 +80,11 @@ public class HomeActivity extends FragmentActivity {
 //		Log.e("aeh", m.group(5));
 
 		setContentView(R.layout.activity_home);
-		setFilterDefaultValues();
 		start = findViewById(R.id.home_start);
 		filter = findViewById(R.id.home_filter);
 		progressBar = findViewById(R.id.progressBar2);
 		start.setOnClickListener(onClickListener);
 		filter.setOnClickListener(onClickListener);
-
-		SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(this);
-		category = sharedPrefs.getString(
-				getString(R.string.category_key),
-				getString(R.string.medium_value)
-		);
-
-		difficulty = sharedPrefs.getString(
-				getString(R.string.difficulty_key),
-				getString(R.string.medium_value)
-		);
-
 
 		// Test with dummy questions
 		Intent intent = new Intent(HomeActivity.this, QuizActivity.class);
@@ -130,30 +115,6 @@ public class HomeActivity extends FragmentActivity {
 //		q = new Question(getApplicationContext());
 //		start.setClickable(false);
 //		fetchQuestionAPI();
-	}
-
-	private void setFilterDefaultValues() {
-		SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(this);
-		difficulty = sharedPrefs.getString(
-				getString(R.string.difficulty_key),
-				null
-		);
-		category = sharedPrefs.getString(
-				getString(R.string.category_key),
-				null
-		);
-		if (difficulty == null) {
-			sharedPrefs
-					.edit()
-					.putString(getString(R.string.difficulty_key), getString(R.string.easy_value))
-					.apply();
-		}
-		if (category == null) {
-			sharedPrefs
-					.edit()
-					.putString(getString(R.string.category_key), getString(R.string.any_category_value))
-					.apply();
-		}
 	}
 
 	public void fetchQuestionAPI() {
@@ -342,119 +303,5 @@ public class HomeActivity extends FragmentActivity {
 				start.setClickable(true);
 			}
 		});
-	}
-
-	void setOptions(Result r, int ran) {
-//		List<String> wrong;
-//		switch (ran) {
-//			case 0:
-//				try {
-//					q.optA.add(java.net.URLDecoder.decode(r.getCorrectAnswer(), "UTF-8"));
-//				} catch (UnsupportedEncodingException e) {
-//					e.printStackTrace();
-//				}
-//
-//				wrong = r.getIncorrectAnswers();
-//				try {
-//					q.optB.add(java.net.URLDecoder.decode(wrong.get(0), "UTF-8"));
-//				} catch (UnsupportedEncodingException e) {
-//					e.printStackTrace();
-//				}
-//				// Options C, D are not applicable for Boolean Type Questions.
-//				if (r.getType().equals("boolean")) {
-//					q.optC.add("false");
-//					q.optD.add("false");
-//					return;
-//				}
-//				try {
-//					q.optC.add(java.net.URLDecoder.decode(wrong.get(1), "UTF-8"));
-//				} catch (UnsupportedEncodingException e) {
-//					e.printStackTrace();
-//				}
-//				try {
-//					q.optD.add(java.net.URLDecoder.decode(wrong.get(2), "UTF-8"));
-//				} catch (UnsupportedEncodingException e) {
-//					e.printStackTrace();
-//				}
-//				break;
-//			case 1:
-//				try {
-//					q.optB.add(java.net.URLDecoder.decode(r.getCorrectAnswer(), "UTF-8"));
-//				} catch (UnsupportedEncodingException e) {
-//					e.printStackTrace();
-//				}
-//
-//				wrong = r.getIncorrectAnswers();
-//				try {
-//					q.optA.add(java.net.URLDecoder.decode(wrong.get(0), "UTF-8"));
-//				} catch (UnsupportedEncodingException e) {
-//					e.printStackTrace();
-//				}
-//				// Options C, D are not applicable for Boolean Type Questions.
-//				if (r.getType().equals("boolean")) {
-//					q.optC.add("false");
-//					q.optD.add("false");
-//					return;
-//				}
-//				try {
-//					q.optC.add(java.net.URLDecoder.decode(wrong.get(1), "UTF-8"));
-//				} catch (UnsupportedEncodingException e) {
-//					e.printStackTrace();
-//				}
-//				try {
-//					q.optD.add(java.net.URLDecoder.decode(wrong.get(2), "UTF-8"));
-//				} catch (UnsupportedEncodingException e) {
-//					e.printStackTrace();
-//				}
-//				break;
-//			case 2:
-//				try {
-//					q.optC.add(java.net.URLDecoder.decode(r.getCorrectAnswer(), "UTF-8"));
-//				} catch (UnsupportedEncodingException e) {
-//					e.printStackTrace();
-//				}
-//
-//				wrong = r.getIncorrectAnswers();
-//				try {
-//					q.optA.add(java.net.URLDecoder.decode(wrong.get(0), "UTF-8"));
-//				} catch (UnsupportedEncodingException e) {
-//					e.printStackTrace();
-//				}
-//				try {
-//					q.optB.add(java.net.URLDecoder.decode(wrong.get(1), "UTF-8"));
-//				} catch (UnsupportedEncodingException e) {
-//					e.printStackTrace();
-//				}
-//				try {
-//					q.optD.add(java.net.URLDecoder.decode(wrong.get(2), "UTF-8"));
-//				} catch (UnsupportedEncodingException e) {
-//					e.printStackTrace();
-//				}
-//				break;
-//			case 3:
-//				try {
-//					q.optD.add(java.net.URLDecoder.decode(r.getCorrectAnswer(), "UTF-8"));
-//				} catch (UnsupportedEncodingException e) {
-//					e.printStackTrace();
-//				}
-//
-//				wrong = r.getIncorrectAnswers();
-//				try {
-//					q.optA.add(java.net.URLDecoder.decode(wrong.get(0), "UTF-8"));
-//				} catch (UnsupportedEncodingException e) {
-//					e.printStackTrace();
-//				}
-//				try {
-//					q.optB.add(java.net.URLDecoder.decode(wrong.get(1), "UTF-8"));
-//				} catch (UnsupportedEncodingException e) {
-//					e.printStackTrace();
-//				}
-//				try {
-//					q.optC.add(java.net.URLDecoder.decode(wrong.get(2), "UTF-8"));
-//				} catch (UnsupportedEncodingException e) {
-//					e.printStackTrace();
-//				}
-//				break;
-//		}
 	}
 }
