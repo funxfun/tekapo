@@ -314,6 +314,8 @@ public class QuizActivity extends FragmentActivity {
 			button.setVisibility(View.INVISIBLE);
 			button = findViewById(R.id.submit);
 			button.setVisibility(View.VISIBLE);
+			opD.setNextFocusDownId(R.id.submit);
+			opD.setNextFocusRightId(R.id.submit);
 			optionsGroup.clearCheck();
 			goNext();
 		}
