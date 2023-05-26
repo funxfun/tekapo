@@ -187,7 +187,7 @@ public class TVLockActivity extends Activity {
             imageViewPin3.setImageDrawable(getDrawable(R.drawable.pin_empty));
             imageViewPin4.setImageDrawable(getDrawable(R.drawable.pin_empty));
             textViewStatus.setText("");
-            if ( keyCode == KeyEvent.KEYCODE_4 )
+            if ( keyCode == KeyEvent.KEYCODE_6 )
             {
                 Log.d(TAG, "onKeyUp() - " + counter + ". digit is correct");
                 isDigit = true;
@@ -201,7 +201,7 @@ public class TVLockActivity extends Activity {
         if ( counter == 2 )
         {
             imageViewPin2.setImageDrawable(getDrawable(R.drawable.pin_filled));
-            if ( keyCode == KeyEvent.KEYCODE_7 )
+            if ( keyCode == KeyEvent.KEYCODE_6 )
             {
                 Log.d(TAG, "onKeyUp() - " + counter + ". digit is correct");
             }
@@ -214,7 +214,7 @@ public class TVLockActivity extends Activity {
         if ( counter == 3 )
         {
             imageViewPin3.setImageDrawable(getDrawable(R.drawable.pin_filled));
-            if ( keyCode == KeyEvent.KEYCODE_1 )
+            if ( keyCode == KeyEvent.KEYCODE_8 )
             {
                 Log.d(TAG, "onKeyUp() - " + counter + ". digit is correct");
             }
@@ -227,7 +227,7 @@ public class TVLockActivity extends Activity {
         if ( counter == 4 )
         {
             imageViewPin4.setImageDrawable(getDrawable(R.drawable.pin_filled));
-            if ( keyCode == KeyEvent.KEYCODE_1 )
+            if ( keyCode == KeyEvent.KEYCODE_3 )
             {
                 Log.d(TAG, "onKeyUp() - " + counter + ". digit is correct");
                 if (isDigit) {
