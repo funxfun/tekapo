@@ -209,27 +209,6 @@ public class QuizActivity extends FragmentActivity {
 		}
 	}
 
-	public void clickSubmit(final View view) {
-		AlertDialog.Builder alertConfirm = new AlertDialog.Builder(this);
-		alertConfirm.setTitle("Confirm Submission");
-		alertConfirm.setMessage("Do you want to submit jp.funx.tekapo?");
-		alertConfirm.setCancelable(true);
-		alertConfirm.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-			@Override
-			public void onClick(DialogInterface dialog, int which) {
-
-			}
-		});
-		alertConfirm.setPositiveButton("Submit", new DialogInterface.OnClickListener() {
-			@Override
-			public void onClick(DialogInterface dialog, int which) {
-				submit(view);
-			}
-		});
-		AlertDialog dialog = alertConfirm.create();
-		dialog.show();
-	}
-
 	public void submit(View view) {
 		clickNext(view);
 		if (submit)
