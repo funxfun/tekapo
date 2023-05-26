@@ -3,6 +3,8 @@
     <string name="next">Next</string>
     <string name="prev">Prev</string>
     <string name="submit">Finish</string>
+    <string name="pin">PIN</string>
+    <string name="restart">Restart</string>
     <string name="view_answer">View Answer</string>
 
     <string name="answers">Answers</string>

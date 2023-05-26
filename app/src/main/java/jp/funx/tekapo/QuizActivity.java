@@ -226,7 +226,7 @@ public class QuizActivity extends FragmentActivity {
 		alert.setView(alertLayout);
 		alert.setCancelable(false);
 
-		alert.setNegativeButton("Exit", new DialogInterface.OnClickListener() {
+		alert.setNegativeButton("UNLOCK", new DialogInterface.OnClickListener() {
 
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
@@ -291,6 +291,18 @@ public class QuizActivity extends FragmentActivity {
 
 		nextC++;
 		ans = 0;
+	}
+
+	public void clickPIN(View v) {
+		Intent intent = new Intent(getApplicationContext(), TVLockActivity.class);
+		intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+		startActivity(intent);
+	}
+
+	public void clickRestart(View v) {
+		Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
+		intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+		startActivity(intent);
 	}
 
 	public void checkScore() {
