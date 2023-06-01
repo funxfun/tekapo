@@ -1,12 +1,15 @@
 package jp.funx.tekapo;
 
+import android.app.ActivityManager;
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
+import android.content.ServiceConnection;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
-import androidx.appcompat.app.AppCompatActivity;
+
 import androidx.fragment.app.FragmentActivity;
 
+import android.os.IBinder;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -19,7 +22,6 @@ import jp.funx.tekapo.api.Content;
 import jp.funx.tekapo.api.Problem;
 import jp.funx.tekapo.api.QuizQuestions;
 import jp.funx.tekapo.api.Request;
-import jp.funx.tekapo.api.Result;
 import jp.funx.tekapo.question.Question;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -41,7 +43,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class HomeActivity extends FragmentActivity {
+public class MainActivity extends FragmentActivity {
 	Button start;
 	Button filter;
 	ProgressBar progressBar;
@@ -87,7 +89,7 @@ public class HomeActivity extends FragmentActivity {
 		filter.setOnClickListener(onClickListener);
 
 		// Test with dummy questions
-		Intent intent = new Intent(HomeActivity.this, QuizActivity.class);
+		Intent intent = new Intent(MainActivity.this, QuizActivity.class);
 		q = new Question(getApplicationContext());
 		q.question.add("Q1. What is the correct answer (test question)?");
 		q.optA.add("1. Answer 1 [correct one]");
@@ -289,7 +291,7 @@ public class HomeActivity extends FragmentActivity {
 
 				progressBar.setVisibility(View.INVISIBLE);
 				start.setClickable(true);
-				Intent intent = new Intent(HomeActivity.this, QuizActivity.class);
+				Intent intent = new Intent(MainActivity.this, QuizActivity.class);
 				intent.putExtra("question", q);
 				startActivity(intent);
 			}
@@ -303,5 +305,111 @@ public class HomeActivity extends FragmentActivity {
 				start.setClickable(true);
 			}
 		});
+	}
+
+	final String TAG = "MainActivity";
+
+	static boolean active = true;
+
+	Service mService;
+	boolean mBound = false;
+
+	/** Defines callbacks for service binding, passed to bindService() */
+	private final ServiceConnection connection = new ServiceConnection() {
+
+		@Override
+		public void onServiceConnected(ComponentName className,
+									   IBinder service) {
+			// We've bound to LocalService, cast the IBinder and get LocalService instance
+			Service.TvLockBinder binder = (Service.TvLockBinder) service;
+			mService = binder.getService();
+			mBound = true;
+		}
+
+		@Override
+		public void onServiceDisconnected(ComponentName arg0) {
+			mBound = false;
+		}
+	};
+
+	@Override
+	public void onStart(){
+		Log.d(TAG,"onStart()");
+		super.onStart();
+		active = true;
+		if ( !isServiceRunning(Service.class) ) {
+			Log.d(TAG,"onStart() - startService()");
+			Intent intent = new Intent(this, Service.class);
+			startService(intent);
+			Toast.makeText(this, "startService(intent)", Toast.LENGTH_SHORT).show();
+		}
+		else {
+			Log.d(TAG,"onStart() - service already started");
+		}
+		if ( isServiceRunning(Service.class) ) {
+			if (!mBound) {
+				Log.d(TAG,"onStart() - bindService()");
+				// Bind to Service
+				Intent intent = new Intent(this, Service.class);
+				bindService(intent, connection, Context.BIND_AUTO_CREATE);
+				Toast.makeText(this, "bindService()", Toast.LENGTH_SHORT).show();
+			} else {
+				Log.d(TAG,"onStart() - already bound");
+			}
+		}
+		else
+		{
+			Log.d(TAG,"onStart() - cannot bindService() - service not running");
+			Toast.makeText(this, "cannot bindService() - service not running", Toast.LENGTH_SHORT).show();
+		}
+	}
+
+	@Override
+	public void onRestart(){
+		Log.d(TAG,"onRestart()");
+		super.onRestart();
+		active = true;
+	}
+
+	@Override
+	public void onResume(){
+		Log.d(TAG,"onResume()");
+		super.onResume();
+		active = true;
+	}
+
+	@Override
+	public void onPause(){
+		Log.d(TAG,"onPause()");
+		super.onPause();
+		active = false;
+	}
+
+	@Override
+	public void onStop(){
+		Log.d(TAG,"onStop()");
+		super.onStop();
+		active = false;
+	}
+
+	@Override
+	public void onDestroy(){
+		Log.d(TAG,"onDestroy()");
+		super.onDestroy();
+		active = false;
+		if (mBound){
+			unbindService(connection);
+			mBound = false;
+		}
+	}
+
+	private boolean isServiceRunning(Class<?> serviceClass) {
+		ActivityManager manager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
+		for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
+			if (serviceClass.getName().equals(service.service.getClassName())) {
+				return true;
+			}
+		}
+		return false;
 	}
 }

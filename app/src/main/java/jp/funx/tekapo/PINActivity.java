@@ -7,6 +7,7 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.util.Log;
@@ -18,10 +19,8 @@ import android.widget.Toast;
 /*
  * Main Activity class that loads {@link MainFragment}.
  */
-public class TVLockActivity extends Activity {
-
-    final String TAG = "TVLockActivity";
-    static boolean active = false;
+public class PINActivity extends Activity {
+    final String TAG = "PINActivity";
 
     public TextView textViewBitte;
     public TextView textViewStatus;
@@ -33,104 +32,18 @@ public class TVLockActivity extends Activity {
 
     public int counter;
     public boolean isDigit;
-    public boolean isPIN;
-
-    Service mService;
-    boolean mBound = false;
-
-    /** Defines callbacks for service binding, passed to bindService() */
-    private final ServiceConnection connection = new ServiceConnection() {
-
-        @Override
-        public void onServiceConnected(ComponentName className,
-                                       IBinder service) {
-            // We've bound to LocalService, cast the IBinder and get LocalService instance
-            Service.TvLockBinder binder = (Service.TvLockBinder) service;
-            mService = binder.getService();
-            mBound = true;
-        }
-
-        @Override
-        public void onServiceDisconnected(ComponentName arg0) {
-            mBound = false;
-        }
-    };
 
     @Override
     public void onStart(){
         Log.d(TAG,"onStart()");
         super.onStart();
-        active = true;
-        isPIN = false;
+//        MainActivity.active = true; // TODO: not sure if should comment out
         textViewStatus.setText("");
         imageViewPin1.setImageDrawable(getDrawable(R.drawable.pin_empty));
         imageViewPin2.setImageDrawable(getDrawable(R.drawable.pin_empty));
         imageViewPin3.setImageDrawable(getDrawable(R.drawable.pin_empty));
         imageViewPin4.setImageDrawable(getDrawable(R.drawable.pin_empty));
-        if ( !isServiceRunning(Service.class) ) {
-            Log.d(TAG,"onStart() - startService()");
-            Intent intent = new Intent(this, Service.class);
-            startService(intent);
-            Toast.makeText(this, "startService(intent)", Toast.LENGTH_SHORT).show();
-        }
-        else {
-            Log.d(TAG,"onStart() - service already started");
-        }
-        if ( isServiceRunning(Service.class) ) {
-            if (!mBound) {
-                Log.d(TAG,"onStart() - bindService()");
-                // Bind to Service
-                Intent intent = new Intent(this, Service.class);
-                bindService(intent, connection, Context.BIND_AUTO_CREATE);
-                Toast.makeText(this, "bindService()", Toast.LENGTH_SHORT).show();
-            } else {
-                Log.d(TAG,"onStart() - already bound");
-            }
-        }
-        else
-        {
-            Log.d(TAG,"onStart() - cannot bindService() - service not running");
-            Toast.makeText(this, "cannot bindService() - service not running", Toast.LENGTH_SHORT).show();
-        }
     }
-
-    @Override
-    public void onRestart(){
-        Log.d(TAG,"onRestart()");
-        super.onRestart();
-        active = true;
-    }
-    @Override
-    public void onResume(){
-        Log.d(TAG,"onResume()");
-        super.onResume();
-        active = true;
-    }
-    @Override
-    public void onPause(){
-        Log.d(TAG,"onPause()");
-        super.onPause();
-        active = false;
-    }
-    @Override
-    public void onStop(){
-        Log.d(TAG,"onStop()");
-        super.onStop();
-        active = false;
-    }
-
-    @Override
-    public void onDestroy(){
-        Log.d(TAG,"onDestroy()");
-        super.onDestroy();
-        active = false;
-        if (mBound){
-            unbindService(connection);
-            mBound = false;
-        }
-    }
-
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -153,29 +66,29 @@ public class TVLockActivity extends Activity {
     public boolean onKeyUp(int keyCode, KeyEvent event)
     {
         Log.d(TAG, "onKeyUp() = " + keyCode);
-        if ( keyCode == KeyEvent.KEYCODE_S || keyCode == KeyEvent.KEYCODE_MEDIA_PLAY ){
-            if ( !isServiceRunning(Service.class) ) {
-                Intent intent = new Intent(this, Service.class);
-                startService(intent);
-                Toast.makeText(this, "startService(intent)", Toast.LENGTH_SHORT).show();
-            }
-            else {
-                Toast.makeText(this, "service already started", Toast.LENGTH_SHORT).show();
-            }
-            return true;
-        }
-        if ( keyCode == KeyEvent.KEYCODE_B || keyCode == KeyEvent.KEYCODE_MEDIA_NEXT ){
-            if (!mBound) {
-                // Bind to Service
-                Intent intent = new Intent(this, Service.class);
-                bindService(intent, connection, Context.BIND_AUTO_CREATE);
-                Toast.makeText(this, "bindService()", Toast.LENGTH_SHORT).show();
-            }
-            else {
-                Toast.makeText(this, "already bound", Toast.LENGTH_SHORT).show();
-            }
-            return true;
-        }
+//        if ( keyCode == KeyEvent.KEYCODE_S || keyCode == KeyEvent.KEYCODE_MEDIA_PLAY ){
+//            if ( !isServiceRunning(Service.class) ) {
+//                Intent intent = new Intent(this, Service.class);
+//                startService(intent);
+//                Toast.makeText(this, "startService(intent)", Toast.LENGTH_SHORT).show();
+//            }
+//            else {
+//                Toast.makeText(this, "service already started", Toast.LENGTH_SHORT).show();
+//            }
+//            return true;
+//        }
+//        if ( keyCode == KeyEvent.KEYCODE_B || keyCode == KeyEvent.KEYCODE_MEDIA_NEXT ){
+//            if (!mBound) {
+//                // Bind to Service
+//                Intent intent = new Intent(this, Service.class);
+//                bindService(intent, connection, Context.BIND_AUTO_CREATE);
+//                Toast.makeText(this, "bindService()", Toast.LENGTH_SHORT).show();
+//            }
+//            else {
+//                Toast.makeText(this, "already bound", Toast.LENGTH_SHORT).show();
+//            }
+//            return true;
+//        }
         if ( keyCode == KeyEvent.KEYCODE_DPAD_CENTER || keyCode == KeyEvent.KEYCODE_R ){
             return true;
         }
@@ -232,21 +145,24 @@ public class TVLockActivity extends Activity {
                 Log.d(TAG, "onKeyUp() - " + counter + ". digit is correct");
                 if (isDigit) {
                     Log.d(TAG, "onKeyUp() - PIN IS CORRECT!!!");
-                    if (mBound) {
-                        Log.d(TAG, "setIsPIN(true)");
-                        mService.setIsPIN(true);
-                    }
-                    else
-                    {
-                        Log.d(TAG, "cannot setIsPIN(true) - service not bound");
-                        Toast.makeText(this, "cannot setIsPIN(true) - service not bound", Toast.LENGTH_SHORT).show();
-                    }
-                    isPIN = true;
+//                    if (mBound) {
+//                        Log.d(TAG, "setIsPIN(true)");
+//                        mService.setIsPIN(true);
+//                    }
+//                    else
+//                    {
+//                        Log.d(TAG, "cannot setIsPIN(true) - service not bound");
+//                        Toast.makeText(this, "cannot setIsPIN(true) - service not bound", Toast.LENGTH_SHORT).show();
+//                    }
                     textViewStatus.setText(getString(R.string.TextOkPIN));
                     textViewStatus.setTextColor(getResources().getColor(color.white));
                     textViewBitte.setTextColor(getResources().getColor(color.white));
-                    TVLockActivity.super.moveTaskToBack(true);
-                    //finish();
+
+                    //PINActivity.super.moveTaskToBack(true);
+                    Intent data = new Intent();
+                    data.putExtra("isPIN", true);
+                    setResult(RESULT_OK, data);
+                    finish();
                 }
                 else
                 {
@@ -285,16 +201,4 @@ public class TVLockActivity extends Activity {
         Log.d(TAG, "onKeyDown() = " + keyCode);
         return true;
     }
-
-    private boolean isServiceRunning(Class<?> serviceClass) {
-        ActivityManager manager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
-        for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
-            if (serviceClass.getName().equals(service.service.getClassName())) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-
 }

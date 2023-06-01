@@ -294,14 +294,25 @@ public class QuizActivity extends FragmentActivity {
 	}
 
 	public void clickPIN(View v) {
-		Intent intent = new Intent(getApplicationContext(), TVLockActivity.class);
-		intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-		startActivity(intent);
+		Intent intent = new Intent(getApplicationContext(), PINActivity.class);
+		intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+//		startActivity(intent);
+		startActivityForResult(intent, 300);
+	}
+
+	public void onActivityResult(int requestCode, int resultCode, Intent data) {
+		if (requestCode == 300) {
+			if (resultCode == RESULT_OK) {
+				Toast.makeText(getApplicationContext(), ""+data.getBooleanArrayExtra("isPIN"), Toast.LENGTH_SHORT).show();
+				setResult(RESULT_OK, data);
+				finish();
+			}
+		}
 	}
 
 	public void clickRestart(View v) {
-		Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
-		intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+		Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+		intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
 		startActivity(intent);
 	}
 

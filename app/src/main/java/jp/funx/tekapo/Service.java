@@ -1,5 +1,7 @@
 package jp.funx.tekapo;
 
+import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
+
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -64,9 +66,9 @@ public class Service extends android.app.Service {
                 counter++;
                 Log.d(TAG,"handleMessage() - counter = " + counter);
                 if ( !isPIN && screenOn ) {
-                    if ( !TVLockActivity.active ) {
-                        Log.d(TAG, "handleMessage() activate TVLockActivity - isPIN = " + isPIN + " - TVLockActivity.active = " + TVLockActivity.active + " - screenOn = " + screenOn);
-                        Intent notificationIntent = new Intent(Service.this, TVLockActivity.class);
+                    if ( !MainActivity.active ) {
+                        Log.d(TAG, "handleMessage() activate PINActivity - isPIN = " + isPIN + " - PINActivity.active = " + MainActivity.active + " - screenOn = " + screenOn);
+                        Intent notificationIntent = new Intent(Service.this, MainActivity.class);
                         notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
                         PendingIntent pendingIntent = PendingIntent.getActivity(Service.this, 0, notificationIntent, 0);
                         try {
@@ -89,7 +91,7 @@ public class Service extends android.app.Service {
                 }
                 /*
                 try {
-                    Intent activityIntent = new Intent(Service.this, TVLockActivity.class);
+                    Intent activityIntent = new Intent(Service.this, PINActivity.class);
                     activityIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(activityIntent);
                     Thread.sleep(20000);
@@ -104,7 +106,6 @@ public class Service extends android.app.Service {
             stopSelf(msg.arg1);
         }
     }
-
 
     @Override
     public void onCreate() {
@@ -128,7 +129,6 @@ public class Service extends android.app.Service {
     public int onStartCommand(Intent intent, int flags, int startId) {
         Log.d(TAG,"onStartCommand()");
         Toast.makeText(this, "service starting", Toast.LENGTH_SHORT).show();
-
 
         final IntentFilter filter = new IntentFilter(Intent.ACTION_SCREEN_ON);
         filter.addAction(Intent.ACTION_SCREEN_OFF);
@@ -156,6 +156,13 @@ public class Service extends android.app.Service {
         Log.d(TAG,"onBind() - runflag = " + runflag);
         // A client is binding to the service with bindService()
         Toast.makeText(this, "service bound", Toast.LENGTH_SHORT).show();
+
+        // TODO: testing this way coz got error saying we need  FLAG_ACTIVITY_NEW_TASK
+        Intent intent2 = new Intent(getApplicationContext(), MainActivity.class);
+        intent2.setFlags(FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent2);
+        //
+
         return mBinder;
     }
 
@@ -194,7 +201,7 @@ public class Service extends android.app.Service {
                 runflag = true;
                 screenOn = true;
                 Log.i(TAG,"Screen On intent received - screenOn = " + screenOn );
-                Intent notificationIntent = new Intent(Service.this, TVLockActivity.class);
+                Intent notificationIntent = new Intent(Service.this, PINActivity.class);
                 notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 PendingIntent pendingIntent = PendingIntent.getActivity(Service.this, 0, notificationIntent, 0);
                 try
