@@ -64,7 +64,7 @@ public class Service extends android.app.Service {
             int counter = 0;
             while ( runflag ){
                 counter++;
-                Log.d(TAG,"handleMessage() - counter = " + counter);
+//                Log.d(TAG,"handleMessage() - counter = " + counter);
                 if ( !isPIN && screenOn ) {
                     if ( !MainActivity.active ) {
                         Log.d(TAG, "handleMessage() activate PINActivity - isPIN = " + isPIN + " - PINActivity.active = " + MainActivity.active + " - screenOn = " + screenOn);
