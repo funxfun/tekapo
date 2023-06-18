@@ -69,7 +69,7 @@ public class Service extends android.app.Service {
                     if ( !MainActivity.active ) {
                         Log.d(TAG, "handleMessage() activate PINActivity - isPIN = " + isPIN + " - PINActivity.active = " + MainActivity.active + " - screenOn = " + screenOn);
                         Intent notificationIntent = new Intent(Service.this, MainActivity.class);
-                        notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+//                        notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
                         PendingIntent pendingIntent = PendingIntent.getActivity(Service.this, 0, notificationIntent, 0);
                         try {
                             pendingIntent.send();
@@ -156,13 +156,6 @@ public class Service extends android.app.Service {
         Log.d(TAG,"onBind() - runflag = " + runflag);
         // A client is binding to the service with bindService()
         Toast.makeText(this, "service bound", Toast.LENGTH_SHORT).show();
-
-        // TODO: testing this way coz got error saying we need  FLAG_ACTIVITY_NEW_TASK
-        Intent intent2 = new Intent(getApplicationContext(), MainActivity.class);
-        intent2.setFlags(FLAG_ACTIVITY_NEW_TASK);
-        startActivity(intent2);
-        //
-
         return mBinder;
     }
 
