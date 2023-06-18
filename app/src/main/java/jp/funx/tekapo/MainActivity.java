@@ -25,10 +25,12 @@ import jp.funx.tekapo.api.Request;
 import jp.funx.tekapo.question.Question;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -87,36 +89,6 @@ public class MainActivity extends FragmentActivity {
 		progressBar = findViewById(R.id.progressBar2);
 		start.setOnClickListener(onClickListener);
 		filter.setOnClickListener(onClickListener);
-
-		// Test with dummy questions
-		Intent intent = new Intent(MainActivity.this, QuizActivity.class);
-		q = new Question(getApplicationContext());
-		q.question.add("Q1. What is the correct answer (test question)?");
-		q.optA.add("1. Answer 1 [correct one]");
-		q.optB.add("2. Answer 2");
-		q.optC.add("3. Answer 3");
-		q.optD.add("4. Answer 4");
-		q.Answer.add(0);
-		q.question.add("Q2. What is the correct answer (test question)?");
-		q.optA.add("1. Answer 1");
-		q.optB.add("2. Answer 2");
-		q.optC.add("3. Answer 3");
-		q.optD.add("4. Answer 4 [correct one]");
-		q.Answer.add(3);
-		q.question.add("Q3. What is the correct answer (test question)?");
-		q.optA.add("1. Answer 1");
-		q.optB.add("2. Answer 2");
-		q.optC.add("3. Answer 3 [correct one]");
-		q.optD.add("4. Answer 4");
-		q.Answer.add(2);
-		intent.putExtra("question", q);
-		startActivity(intent);
-
-		// Start the quiz immediately
-//		progressBar.setVisibility(View.VISIBLE);
-//		q = new Question(getApplicationContext());
-//		start.setClickable(false);
-//		fetchQuestionAPI();
 	}
 
 	public void fetchQuestionAPI() {
@@ -131,55 +103,54 @@ public class MainActivity extends FragmentActivity {
 
 		Random rnd = new Random();
 		boolean isJapanese = false;// rnd.nextInt(6) >= 5 ? true : false;　// TODO: handle Japanese responses later
-		boolean isMultichoice = true; //rnd.nextInt(5) >= 2 ? true : false; // TODO: handle true/false responses later
+//		boolean isMultichoice = true; //rnd.nextInt(5) >= 2 ? true : false; // TODO: handle true/false responses later
 		int numProbs = 10;
 		ArrayList<String> topics = new ArrayList<String>();
-		for (int i = 0; i < numProbs; i++) {
-			switch (rnd.nextInt(12)) {
+//		for (int i = 0; i < numProbs; i++) {
+//			switch (rnd.nextInt(12)) {
 
 				// TODO: topics are hardcoded in Content.java model class for now so ensure they're in sync. Make 'em dynamic one day.
-				case 0:
+//				case 0:
 					topics.add("science");
-					break;
-				case 1:
+//					break;
+//				case 1:
 					topics.add("computers");
-					break;
-				case 2:
+//					break;
+//				case 2:
 					topics.add("nature");
-					break;
-				case 3:
+//					break;
+//				case 3:
 					topics.add("famous people");
-					break;
-				case 4:
+//					break;
+//				case 4:
 					topics.add("video games");
-					break;
-				case 5:
+//					break;
+//				case 5:
 					topics.add("anime and manga");
-					break;
-				case 6:
+//					break;
+//				case 6:
 					topics.add("technology");
-					break;
-				case 7:
+//					break;
+//				case 7:
 					topics.add("programming");
-					break;
-
-				default:
-				case 8:
-				case 9:
-				case 10:
-				case 11:
+//					break;
+//
+//				default:
+//				case 8:
+//				case 9:
+//				case 10:
+//				case 11:
 					topics.add("math");
-					break;
-			}
-		}
+//					break;
+//			}
+//		}
 
-		String problem = "Give " + numProbs + " educational problems and their answers on the topics of "
-				+ String.join(", ", topics) + "."
-				+ "Answers must be in " + (isMultichoice ? "4 multi-choice" : "true/false") + " format."
-				+ " The content must be " +
-				(isJapanese ? 	"suitable for a 12 year old boy, and in the Japanese language at a 12 year old reading level." :
-						"suitable for a 12 year old boy.")
-				+ " Responses must be in JSON format.";
+		// e.g. Give 5 multiple choice questions suitable for a 10 year old boy on a mix of topics in space, technology, math, science, programming and history.
+		// All questions and answers must be in the Japanese language and in JSON format.
+		String problem = "Give " + numProbs + " multiple choice questions suitable for a 10 year old on a mix of topics in "
+				+ String.join(", ", topics) + ". " +
+//				+ "Answers must be in " + (isMultichoice ? "4 multi-choice" : "true/false") + " format."
+				"All questions and answers must be in the " + (isJapanese ? "Japanese" : "English") + " language and in JSON format.";
 		Log.v("problem", problem);
 
 		Message message = new Message("user", problem);
@@ -255,12 +226,19 @@ public class MainActivity extends FragmentActivity {
 						return;
 					}
 
+					List<Problem> problems;
 					GsonBuilder gsonBuilder = new GsonBuilder();
 					gsonBuilder.setLenient();
 					Gson gson = gsonBuilder.create();
-					content = gson.fromJson(contentStr, Content.class);
 
-					List<Problem> problems = content.getProblems();
+					try {
+						// Try first if the resonse is JSON [] array of Problem.class objects
+						Type userListType = new TypeToken<ArrayList<Problem>>() {}.getType();
+						problems = gson.fromJson(contentStr, userListType);
+					} catch (Exception e) {
+						content = gson.fromJson(contentStr, Content.class);
+						problems = content.getProblems();
+					}
 					if (problems == null || problems.size() == 0) {
 						throw new IllegalStateException("Non-parseable problems response");
 					}
@@ -323,7 +301,54 @@ public class MainActivity extends FragmentActivity {
 			// We've bound to LocalService, cast the IBinder and get LocalService instance
 			Service.TvLockBinder binder = (Service.TvLockBinder) service;
 			mService = binder.getService();
+			Log.d(TAG,"onServiceConnected() - bound to service");
 			mBound = true;
+
+			// Test with dummy questions
+			q = new Question(getApplicationContext());
+			// SOF PART 1
+//			q.question.add("Q1. What is the correct answer (test question)?");
+//			q.optA.add("1. Answer 1 [correct one]");
+//			q.optB.add("2. Answer 2");
+//			q.optC.add("3. Answer 3");
+//			q.optD.add("4. Answer 4");
+//			q.Answer.add(0);
+//			q.question.add("Q2. What is the correct answer (test question)?");
+//			q.optA.add("1. Answer 1");
+//			q.optB.add("2. Answer 2");
+//			q.optC.add("3. Answer 3");
+//			q.optD.add("4. Answer 4 [correct one]");
+//			q.Answer.add(3);
+//			q.question.add("Q3. What is the correct answer (test question)?");
+//			q.optA.add("1. Answer 1");
+//			q.optB.add("2. Answer 2");
+//			q.optC.add("3. Answer 3 [correct one]");
+//			q.optD.add("4. Answer 4");
+//			q.Answer.add(2);
+			// EOF PART 1
+			// SOF PART 2
+			String contentStr = "[  {    \"question\": \"What is the process by which plants make food called?\",    \"options\": [\"Photosynthesis\", \"Cell respiration\", \"Mitosis\", \"Meiosis\"],    \"answer\": \"Photosynthesis\"  },  {    \"question\": \"Which of the following is not a type of computer?\",    \"options\": [\"Laptop\", \"Desktop\", \"Tablet\", \"Radio\"],    \"answer\": \"Radio\"  },  {    \"question\": \"What animal is known for its hibernation in the winter?\",    \"options\": [\"Polar bear\", \"Kangaroo\", \"Eagle\", \"Groundhog\"],    \"answer\": \"Groundhog\"  },  {    \"question\": \"Who is known for inventing the light bulb?\",    \"options\": [\"Thomas Edison\", \"Albert Einstein\", \"Nikola Tesla\", \"Leonardo da Vinci\"],    \"answer\": \"Thomas Edison\"  },  {    \"question\": \"Which game requires you to build and explore a world made up of blocks?\",    \"options\": [\"Minecraft\", \"Fortnite\", \"Roblox\", \"Overwatch\"],    \"answer\": \"Minecraft\"  },  {    \"question\": \"Which manga follows the story of a young boy who wants to become the King of Pirates?\",    \"options\": [\"One Piece\", \"Naruto\", \"Dragon Ball\", \"Death Note\"],    \"answer\": \"One Piece\"  },  {    \"question\": \"What is an example of wearable technology?\",    \"options\": [\"Smartwatch\", \"Smartphone\", \"Computer mouse\", \"Keyboard\"],    \"answer\": \"Smartwatch\"  },  {    \"question\": \"Which programming language is often used for building websites?\",    \"options\": [\"Java\", \"Python\", \"HTML\", \"CSS\"],    \"answer\": \"HTML\"  },  {    \"question\": \"What is the sum of 5 + 7?\",    \"options\": [\"8\", \"10\", \"12\", \"14\"],    \"answer\": \"12\"  },  {    \"question\": \"What is the branch of math that deals with the study of shapes and their properties?\",    \"options\": [\"Geometry\", \"Algebra\", \"Calculus\", \"Statistics\"],    \"answer\": \"Geometry\"  }]\n";
+			GsonBuilder gsonBuilder = new GsonBuilder();
+			gsonBuilder.setLenient();
+			Gson gson = gsonBuilder.create();
+			Type userListType = new TypeToken<ArrayList<Problem>>(){}.getType();
+			List<Problem> problems = gson.fromJson(contentStr, userListType);
+			Collections.shuffle(problems);
+			for (int i = 0; i < (problems.size() < 10 ? problems.size() : 10); i++) {
+				q.question.add(problems.get(i).getProblem());
+				q.optA.add(problems.get(i).getChoices().get(0));
+				q.optB.add(problems.get(i).getChoices().get(1));
+				q.optC.add(problems.get(i).getChoices().get(2));
+				q.optD.add(problems.get(i).getChoices().get(3));
+				q.Answer.add(problems.get(i).getAnswerIndex());
+			}
+			// EOF PART 2
+			Intent intent = new Intent(MainActivity.this, QuizActivity.class);
+			intent.putExtra("question", q);
+			startActivity(intent);
+
+			// Start the quiz immediately
+//			fetchQuestionAPI();
 		}
 
 		@Override
