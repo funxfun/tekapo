@@ -85,10 +85,14 @@ public class MainActivity extends FragmentActivity {
 
 		setContentView(R.layout.activity_home);
 		start = findViewById(R.id.home_start);
+		start.setVisibility(View.GONE); // not using this button in Tekapo
 		filter = findViewById(R.id.home_filter);
+		filter.setVisibility(View.GONE); // not using this button in Tekapo
 		progressBar = findViewById(R.id.progressBar2);
 		start.setOnClickListener(onClickListener);
 		filter.setOnClickListener(onClickListener);
+		progressBar.setVisibility(View.VISIBLE);
+		start.setClickable(false);
 	}
 
 	public void fetchQuestionAPI() {
