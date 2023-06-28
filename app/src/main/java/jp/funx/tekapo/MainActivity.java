@@ -291,8 +291,6 @@ public class MainActivity extends FragmentActivity {
 
 	final String TAG = "MainActivity";
 
-	static boolean active = true;
-
 	Service mService;
 	boolean mBound = false;
 
@@ -347,6 +345,7 @@ public class MainActivity extends FragmentActivity {
 				q.Answer.add(problems.get(i).getAnswerIndex());
 			}
 			// EOF PART 2
+			Log.d(TAG, "onServiceConnected() starting QuizActivity");
 			Intent intent = new Intent(MainActivity.this, QuizActivity.class);
 			intent.putExtra("question", q);
 			startActivity(intent);
@@ -365,8 +364,7 @@ public class MainActivity extends FragmentActivity {
 	public void onStart(){
 		Log.d(TAG,"onStart()");
 		super.onStart();
-		active = true;
-		if ( !isServiceRunning(Service.class) ) {
+		if ( !isServiceRunning(Service.class, getApplicationContext()) ) {
 			Log.d(TAG,"onStart() - startService()");
 			Intent intent = new Intent(this, Service.class);
 			startService(intent);
@@ -375,7 +373,7 @@ public class MainActivity extends FragmentActivity {
 		else {
 			Log.d(TAG,"onStart() - service already started");
 		}
-		if ( isServiceRunning(Service.class) ) {
+		if ( isServiceRunning(Service.class, getApplicationContext()) ) {
 			if (!mBound) {
 				Log.d(TAG,"onStart() - bindService()");
 				// Bind to Service
@@ -394,46 +392,17 @@ public class MainActivity extends FragmentActivity {
 	}
 
 	@Override
-	public void onRestart(){
-		Log.d(TAG,"onRestart()");
-		super.onRestart();
-		active = true;
-	}
-
-	@Override
-	public void onResume(){
-		Log.d(TAG,"onResume()");
-		super.onResume();
-		active = true;
-	}
-
-	@Override
-	public void onPause(){
-		Log.d(TAG,"onPause()");
-		super.onPause();
-		active = false;
-	}
-
-	@Override
-	public void onStop(){
-		Log.d(TAG,"onStop()");
-		super.onStop();
-		active = false;
-	}
-
-	@Override
 	public void onDestroy(){
 		Log.d(TAG,"onDestroy()");
 		super.onDestroy();
-		active = false;
 		if (mBound){
 			unbindService(connection);
 			mBound = false;
 		}
 	}
 
-	private boolean isServiceRunning(Class<?> serviceClass) {
-		ActivityManager manager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
+	public static boolean isServiceRunning(Class<?> serviceClass, Context context) {
+		ActivityManager manager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
 		for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
 			if (serviceClass.getName().equals(service.service.getClassName())) {
 				return true;

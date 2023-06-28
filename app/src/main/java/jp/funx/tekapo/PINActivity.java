@@ -2,19 +2,12 @@ package jp.funx.tekapo;
 
 import android.R.color;
 import android.app.Activity;
-import android.app.ActivityManager;
-import android.content.ComponentName;
-import android.content.Context;
 import android.content.Intent;
-import android.content.ServiceConnection;
-import android.net.Uri;
 import android.os.Bundle;
-import android.os.IBinder;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 /*
  * Main Activity class that loads {@link MainFragment}.
@@ -37,7 +30,6 @@ public class PINActivity extends Activity {
     public void onStart(){
         Log.d(TAG,"onStart()");
         super.onStart();
-//        MainActivity.active = true; // TODO: not sure if should comment out
         textViewStatus.setText("");
         imageViewPin1.setImageDrawable(getDrawable(R.drawable.pin_empty));
         imageViewPin2.setImageDrawable(getDrawable(R.drawable.pin_empty));

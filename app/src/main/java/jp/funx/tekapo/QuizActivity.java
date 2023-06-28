@@ -1,12 +1,17 @@
 package jp.funx.tekapo;
 
 import android.app.AlertDialog;
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import androidx.fragment.app.FragmentActivity;
 
+import android.os.IBinder;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -340,5 +345,68 @@ public class QuizActivity extends FragmentActivity {
 	@Override
 	public void onBackPressed() {
 		Toast.makeText(this, "Back Press is not allowed", Toast.LENGTH_LONG).show();
+	}
+
+	final String TAG = "QuizActivity";
+
+	private final ServiceConnection connection = new ServiceConnection() {
+		@Override
+		public void onServiceConnected(ComponentName className,
+									   IBinder service) {
+			// We've bound to LocalService, cast the IBinder and get LocalService instance
+			Service.TvLockBinder binder = (Service.TvLockBinder) service;
+			mService = binder.getService();
+			Log.d(TAG,"onServiceConnected() - bound to service");
+			mBound = true;
+		}
+
+		@Override
+		public void onServiceDisconnected(ComponentName arg0) {
+			mBound = false;
+		}
+	};
+
+	Service mService;
+	boolean mBound = false;
+
+	@Override
+	public void onStart(){
+		Log.d(TAG,"onStart()");
+		super.onStart();
+		if ( !MainActivity.isServiceRunning(Service.class, getApplicationContext()) ) {
+			Log.d(TAG,"onStart() - startService()");
+			Intent intent = new Intent(this, Service.class);
+			startService(intent);
+			Toast.makeText(this, "startService(intent)", Toast.LENGTH_SHORT).show();
+		}
+		else {
+			Log.d(TAG,"onStart() - service already started");
+		}
+		if ( MainActivity.isServiceRunning(Service.class, getApplicationContext()) ) {
+			if (!mBound) {
+				Log.d(TAG,"onStart() - bindService()");
+				// Bind to Service
+				Intent intent = new Intent(this, Service.class);
+				bindService(intent, connection, Context.BIND_AUTO_CREATE);
+				Toast.makeText(this, "bindService()", Toast.LENGTH_SHORT).show();
+			} else {
+				Log.d(TAG,"onStart() - already bound");
+			}
+		}
+		else
+		{
+			Log.d(TAG,"onStart() - cannot bindService() - service not running");
+			Toast.makeText(this, "cannot bindService() - service not running", Toast.LENGTH_SHORT).show();
+		}
+	}
+
+	@Override
+	public void onDestroy(){
+		Log.d(TAG,"onDestroy()");
+		super.onDestroy();
+		if (mBound){
+			unbindService(connection);
+			mBound = false;
+		}
 	}
 }

@@ -2,6 +2,7 @@ package jp.funx.tekapo;
 
 import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
 
+import android.app.ActivityManager;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -16,6 +17,8 @@ import android.os.Message;
 import android.os.Process;
 import android.util.Log;
 import android.widget.Toast;
+
+import java.util.List;
 
 public class Service extends android.app.Service {
 
@@ -64,12 +67,12 @@ public class Service extends android.app.Service {
             int counter = 0;
             while ( runflag ){
                 counter++;
-//                Log.d(TAG,"handleMessage() - counter = " + counter);
+                Log.d(TAG,"handleMessage() - counter = " + counter);
                 if ( !isPIN && screenOn ) {
-                    if ( !MainActivity.active ) {
-                        Log.d(TAG, "handleMessage() activate PINActivity - isPIN = " + isPIN + " - PINActivity.active = " + MainActivity.active + " - screenOn = " + screenOn);
-                        Intent notificationIntent = new Intent(Service.this, MainActivity.class);
-//                        notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                    if (!isAppFronttask()) {
+                        Log.d(TAG, "handleMessage() activate PINActivity - isPIN = " + isPIN + " - isAppFrontTask() = " + isAppFronttask() + " - screenOn = " + screenOn);
+                        Intent notificationIntent = new Intent(Service.this, QuizActivity.class);
+                        notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
                         PendingIntent pendingIntent = PendingIntent.getActivity(Service.this, 0, notificationIntent, 0);
                         try {
                             pendingIntent.send();
@@ -165,6 +168,7 @@ public class Service extends android.app.Service {
         // All clients have unbound with unbindService()
         return mAllowRebind;
     }
+
     @Override
     public void onRebind(Intent intent) {
         Log.d(TAG,"onRebind()");
@@ -174,7 +178,6 @@ public class Service extends android.app.Service {
 
     @Override
     public void onDestroy() {
-        Log.d(TAG,"onDestroy()");
         runflag = false;
         Toast.makeText(this, "service done", Toast.LENGTH_SHORT).show();
         //Intent serviceIntent = new Intent(this, Service.class);
@@ -209,4 +212,21 @@ public class Service extends android.app.Service {
         }
     }
 
+    private boolean isAppFronttask() {
+        ActivityManager activityManager = (ActivityManager) getApplicationContext().getSystemService(Context.ACTIVITY_SERVICE);
+        List<ActivityManager.RunningTaskInfo> RunningTask = activityManager.getRunningTasks(1);
+        ActivityManager.RunningTaskInfo ar = RunningTask.get(0);
+        String className = ar.topActivity.getClassName();
+
+        if(className.equals(MainActivity.class.getName())
+            || className.equals(QuizActivity.class.getName())
+            || className.equals(PINActivity.class.getName())
+        )
+        {
+            Log.d(TAG, "className: " + className);
+            return true;
+        }
+
+        return false;
+    }
 }
