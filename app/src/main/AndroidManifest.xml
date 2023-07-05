@@ -26,6 +26,10 @@
             android:name=".QuizActivity"
             android:screenOrientation="landscape"></activity>
         <activity
+            android:exported="false"
+            android:name=".PINActivity"
+            android:screenOrientation="landscape"></activity>
+        <activity
             android:name=".SolutionActivity"
             android:label="Solutions"
             android:screenOrientation="landscape" />
