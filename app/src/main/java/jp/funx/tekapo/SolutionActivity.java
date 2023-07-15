@@ -52,12 +52,6 @@ public class SolutionActivity extends FragmentActivity {
 //        tabLayout.setupWithViewPager(viewPager);
     }
 
-    @Override
-    public void onBackPressed() {
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
-    }
-
     public static ArrayList<Integer> getAnswer() {
         return Answers;
     }
