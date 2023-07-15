@@ -309,24 +309,24 @@ public class MainActivity extends FragmentActivity {
 			// Test with dummy questions
 			q = new Question(getApplicationContext());
 			// SOF PART 1
-//			q.question.add("Q1. What is the correct answer (test question)?");
-//			q.optA.add("1. Answer 1 [correct one]");
-//			q.optB.add("2. Answer 2");
-//			q.optC.add("3. Answer 3");
-//			q.optD.add("4. Answer 4");
-//			q.Answer.add(0);
-//			q.question.add("Q2. What is the correct answer (test question)?");
-//			q.optA.add("1. Answer 1");
-//			q.optB.add("2. Answer 2");
-//			q.optC.add("3. Answer 3");
-//			q.optD.add("4. Answer 4 [correct one]");
-//			q.Answer.add(3);
-//			q.question.add("Q3. What is the correct answer (test question)?");
-//			q.optA.add("1. Answer 1");
-//			q.optB.add("2. Answer 2");
-//			q.optC.add("3. Answer 3 [correct one]");
-//			q.optD.add("4. Answer 4");
-//			q.Answer.add(2);
+			q.question.add("What is the correct answer (test question)?");
+			q.optA.add("Answer 1 [correct one]");
+			q.optB.add("Answer 2");
+			q.optC.add("Answer 3");
+			q.optD.add("Answer 4");
+			q.Answer.add(0);
+			q.question.add("What is the correct answer (test question)?");
+			q.optA.add("Answer 1");
+			q.optB.add("Answer 2");
+			q.optC.add("Answer 3");
+			q.optD.add("Answer 4 [correct one]");
+			q.Answer.add(3);
+			q.question.add("What is the correct answer (test question)?");
+			q.optA.add("Answer 1");
+			q.optB.add("Answer 2");
+			q.optC.add("Answer 3 [correct one]");
+			q.optD.add("Answer 4");
+			q.Answer.add(2);
 			// EOF PART 1
 			// SOF PART 2
 //			String contentStr = "[  {    \"question\": \"What is the process by which plants make food called?\",    \"options\": [\"Photosynthesis\", \"Cell respiration\", \"Mitosis\", \"Meiosis\"],    \"answer\": \"Photosynthesis\"  },  {    \"question\": \"Which of the following is not a type of computer?\",    \"options\": [\"Laptop\", \"Desktop\", \"Tablet\", \"Radio\"],    \"answer\": \"Radio\"  },  {    \"question\": \"What animal is known for its hibernation in the winter?\",    \"options\": [\"Polar bear\", \"Kangaroo\", \"Eagle\", \"Groundhog\"],    \"answer\": \"Groundhog\"  },  {    \"question\": \"Who is known for inventing the light bulb?\",    \"options\": [\"Thomas Edison\", \"Albert Einstein\", \"Nikola Tesla\", \"Leonardo da Vinci\"],    \"answer\": \"Thomas Edison\"  },  {    \"question\": \"Which game requires you to build and explore a world made up of blocks?\",    \"options\": [\"Minecraft\", \"Fortnite\", \"Roblox\", \"Overwatch\"],    \"answer\": \"Minecraft\"  },  {    \"question\": \"Which manga follows the story of a young boy who wants to become the King of Pirates?\",    \"options\": [\"One Piece\", \"Naruto\", \"Dragon Ball\", \"Death Note\"],    \"answer\": \"One Piece\"  },  {    \"question\": \"What is an example of wearable technology?\",    \"options\": [\"Smartwatch\", \"Smartphone\", \"Computer mouse\", \"Keyboard\"],    \"answer\": \"Smartwatch\"  },  {    \"question\": \"Which programming language is often used for building websites?\",    \"options\": [\"Java\", \"Python\", \"HTML\", \"CSS\"],    \"answer\": \"HTML\"  },  {    \"question\": \"What is the sum of 5 + 7?\",    \"options\": [\"8\", \"10\", \"12\", \"14\"],    \"answer\": \"12\"  },  {    \"question\": \"What is the branch of math that deals with the study of shapes and their properties?\",    \"options\": [\"Geometry\", \"Algebra\", \"Calculus\", \"Statistics\"],    \"answer\": \"Geometry\"  }]\n";
