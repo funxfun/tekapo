@@ -345,13 +345,13 @@ public class MainActivity extends FragmentActivity {
 //				q.Answer.add(problems.get(i).getAnswerIndex());
 //			}
 			// EOF PART 2
-			Log.d(TAG, "onServiceConnected() starting QuizActivity");
-			Intent intent = new Intent(MainActivity.this, QuizActivity.class);
-			intent.putExtra("question", q);
-			startActivity(intent);
+//			Log.d(TAG, "onServiceConnected() starting QuizActivity");
+//			Intent intent = new Intent(MainActivity.this, QuizActivity.class);
+//			intent.putExtra("question", q);
+//			startActivity(intent);
 
 			// Start the quiz immediately
-//			fetchQuestionAPI();
+			fetchQuestionAPI();
 		}
 
 		@Override
