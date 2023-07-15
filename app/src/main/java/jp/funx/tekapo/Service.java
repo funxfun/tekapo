@@ -223,7 +223,7 @@ public class Service extends android.app.Service {
             || className.equals(PINActivity.class.getName())
         )
         {
-            Log.d(TAG, "className: " + className);
+//            Log.d(TAG, "className: " + className);
             return true;
         }
 
