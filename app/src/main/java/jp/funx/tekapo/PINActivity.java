@@ -58,32 +58,6 @@ public class PINActivity extends Activity {
     public boolean onKeyUp(int keyCode, KeyEvent event)
     {
         Log.d(TAG, "onKeyUp() = " + keyCode);
-//        if ( keyCode == KeyEvent.KEYCODE_S || keyCode == KeyEvent.KEYCODE_MEDIA_PLAY ){
-//            if ( !isServiceRunning(Service.class) ) {
-//                Intent intent = new Intent(this, Service.class);
-//                startService(intent);
-//                Toast.makeText(this, "startService(intent)", Toast.LENGTH_SHORT).show();
-//            }
-//            else {
-//                Toast.makeText(this, "service already started", Toast.LENGTH_SHORT).show();
-//            }
-//            return true;
-//        }
-//        if ( keyCode == KeyEvent.KEYCODE_B || keyCode == KeyEvent.KEYCODE_MEDIA_NEXT ){
-//            if (!mBound) {
-//                // Bind to Service
-//                Intent intent = new Intent(this, Service.class);
-//                bindService(intent, connection, Context.BIND_AUTO_CREATE);
-//                Toast.makeText(this, "bindService()", Toast.LENGTH_SHORT).show();
-//            }
-//            else {
-//                Toast.makeText(this, "already bound", Toast.LENGTH_SHORT).show();
-//            }
-//            return true;
-//        }
-        if ( keyCode == KeyEvent.KEYCODE_DPAD_CENTER || keyCode == KeyEvent.KEYCODE_R ){
-            return true;
-        }
 
         if ( counter == 1 )
         {
@@ -137,20 +111,11 @@ public class PINActivity extends Activity {
                 Log.d(TAG, "onKeyUp() - " + counter + ". digit is correct");
                 if (isDigit) {
                     Log.d(TAG, "onKeyUp() - PIN IS CORRECT!!!");
-//                    if (mBound) {
-//                        Log.d(TAG, "setIsPIN(true)");
-//                        mService.setIsPIN(true);
-//                    }
-//                    else
-//                    {
-//                        Log.d(TAG, "cannot setIsPIN(true) - service not bound");
-//                        Toast.makeText(this, "cannot setIsPIN(true) - service not bound", Toast.LENGTH_SHORT).show();
-//                    }
+
                     textViewStatus.setText(getString(R.string.TextOkPIN));
                     textViewStatus.setTextColor(getResources().getColor(color.white));
                     textViewBitte.setTextColor(getResources().getColor(color.white));
 
-                    //PINActivity.super.moveTaskToBack(true);
                     Intent data = new Intent();
                     data.putExtra("isPIN", true);
                     setResult(RESULT_OK, data);
