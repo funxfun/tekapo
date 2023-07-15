@@ -329,21 +329,21 @@ public class MainActivity extends FragmentActivity {
 //			q.Answer.add(2);
 			// EOF PART 1
 			// SOF PART 2
-			String contentStr = "[  {    \"question\": \"What is the process by which plants make food called?\",    \"options\": [\"Photosynthesis\", \"Cell respiration\", \"Mitosis\", \"Meiosis\"],    \"answer\": \"Photosynthesis\"  },  {    \"question\": \"Which of the following is not a type of computer?\",    \"options\": [\"Laptop\", \"Desktop\", \"Tablet\", \"Radio\"],    \"answer\": \"Radio\"  },  {    \"question\": \"What animal is known for its hibernation in the winter?\",    \"options\": [\"Polar bear\", \"Kangaroo\", \"Eagle\", \"Groundhog\"],    \"answer\": \"Groundhog\"  },  {    \"question\": \"Who is known for inventing the light bulb?\",    \"options\": [\"Thomas Edison\", \"Albert Einstein\", \"Nikola Tesla\", \"Leonardo da Vinci\"],    \"answer\": \"Thomas Edison\"  },  {    \"question\": \"Which game requires you to build and explore a world made up of blocks?\",    \"options\": [\"Minecraft\", \"Fortnite\", \"Roblox\", \"Overwatch\"],    \"answer\": \"Minecraft\"  },  {    \"question\": \"Which manga follows the story of a young boy who wants to become the King of Pirates?\",    \"options\": [\"One Piece\", \"Naruto\", \"Dragon Ball\", \"Death Note\"],    \"answer\": \"One Piece\"  },  {    \"question\": \"What is an example of wearable technology?\",    \"options\": [\"Smartwatch\", \"Smartphone\", \"Computer mouse\", \"Keyboard\"],    \"answer\": \"Smartwatch\"  },  {    \"question\": \"Which programming language is often used for building websites?\",    \"options\": [\"Java\", \"Python\", \"HTML\", \"CSS\"],    \"answer\": \"HTML\"  },  {    \"question\": \"What is the sum of 5 + 7?\",    \"options\": [\"8\", \"10\", \"12\", \"14\"],    \"answer\": \"12\"  },  {    \"question\": \"What is the branch of math that deals with the study of shapes and their properties?\",    \"options\": [\"Geometry\", \"Algebra\", \"Calculus\", \"Statistics\"],    \"answer\": \"Geometry\"  }]\n";
-			GsonBuilder gsonBuilder = new GsonBuilder();
-			gsonBuilder.setLenient();
-			Gson gson = gsonBuilder.create();
-			Type userListType = new TypeToken<ArrayList<Problem>>(){}.getType();
-			List<Problem> problems = gson.fromJson(contentStr, userListType);
-			Collections.shuffle(problems);
-			for (int i = 0; i < (problems.size() < 10 ? problems.size() : 10); i++) {
-				q.question.add(problems.get(i).getProblem());
-				q.optA.add(problems.get(i).getChoices().get(0));
-				q.optB.add(problems.get(i).getChoices().get(1));
-				q.optC.add(problems.get(i).getChoices().get(2));
-				q.optD.add(problems.get(i).getChoices().get(3));
-				q.Answer.add(problems.get(i).getAnswerIndex());
-			}
+//			String contentStr = "[  {    \"question\": \"What is the process by which plants make food called?\",    \"options\": [\"Photosynthesis\", \"Cell respiration\", \"Mitosis\", \"Meiosis\"],    \"answer\": \"Photosynthesis\"  },  {    \"question\": \"Which of the following is not a type of computer?\",    \"options\": [\"Laptop\", \"Desktop\", \"Tablet\", \"Radio\"],    \"answer\": \"Radio\"  },  {    \"question\": \"What animal is known for its hibernation in the winter?\",    \"options\": [\"Polar bear\", \"Kangaroo\", \"Eagle\", \"Groundhog\"],    \"answer\": \"Groundhog\"  },  {    \"question\": \"Who is known for inventing the light bulb?\",    \"options\": [\"Thomas Edison\", \"Albert Einstein\", \"Nikola Tesla\", \"Leonardo da Vinci\"],    \"answer\": \"Thomas Edison\"  },  {    \"question\": \"Which game requires you to build and explore a world made up of blocks?\",    \"options\": [\"Minecraft\", \"Fortnite\", \"Roblox\", \"Overwatch\"],    \"answer\": \"Minecraft\"  },  {    \"question\": \"Which manga follows the story of a young boy who wants to become the King of Pirates?\",    \"options\": [\"One Piece\", \"Naruto\", \"Dragon Ball\", \"Death Note\"],    \"answer\": \"One Piece\"  },  {    \"question\": \"What is an example of wearable technology?\",    \"options\": [\"Smartwatch\", \"Smartphone\", \"Computer mouse\", \"Keyboard\"],    \"answer\": \"Smartwatch\"  },  {    \"question\": \"Which programming language is often used for building websites?\",    \"options\": [\"Java\", \"Python\", \"HTML\", \"CSS\"],    \"answer\": \"HTML\"  },  {    \"question\": \"What is the sum of 5 + 7?\",    \"options\": [\"8\", \"10\", \"12\", \"14\"],    \"answer\": \"12\"  },  {    \"question\": \"What is the branch of math that deals with the study of shapes and their properties?\",    \"options\": [\"Geometry\", \"Algebra\", \"Calculus\", \"Statistics\"],    \"answer\": \"Geometry\"  }]\n";
+//			GsonBuilder gsonBuilder = new GsonBuilder();
+//			gsonBuilder.setLenient();
+//			Gson gson = gsonBuilder.create();
+//			Type userListType = new TypeToken<ArrayList<Problem>>(){}.getType();
+//			List<Problem> problems = gson.fromJson(contentStr, userListType);
+//			Collections.shuffle(problems);
+//			for (int i = 0; i < (problems.size() < 10 ? problems.size() : 10); i++) {
+//				q.question.add(problems.get(i).getProblem());
+//				q.optA.add(problems.get(i).getChoices().get(0));
+//				q.optB.add(problems.get(i).getChoices().get(1));
+//				q.optC.add(problems.get(i).getChoices().get(2));
+//				q.optD.add(problems.get(i).getChoices().get(3));
+//				q.Answer.add(problems.get(i).getAnswerIndex());
+//			}
 			// EOF PART 2
 			Log.d(TAG, "onServiceConnected() starting QuizActivity");
 			Intent intent = new Intent(MainActivity.this, QuizActivity.class);
