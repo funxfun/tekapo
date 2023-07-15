@@ -221,6 +221,7 @@ public class Service extends android.app.Service {
         if(className.equals(MainActivity.class.getName())
             || className.equals(QuizActivity.class.getName())
             || className.equals(PINActivity.class.getName())
+            || className.equals(SolutionActivity.class.getName())
         )
         {
 //            Log.d(TAG, "className: " + className);
