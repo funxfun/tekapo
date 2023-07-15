@@ -17,6 +17,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class AnswerAdapter extends RecyclerView.Adapter<AnswerAdapter.AnswerViewHolder> {
+    private List<String> Questions;
     private ArrayList<Integer> Answers;
     private List<Integer> Answer;
     private List<String> optA;
@@ -24,7 +25,8 @@ public class AnswerAdapter extends RecyclerView.Adapter<AnswerAdapter.AnswerView
     private List<String> optC;
     private List<String> optD;
 
-    AnswerAdapter(ArrayList<Integer> answers, List<Integer> answer, List<String> optionsA, List<String> optionsB, List<String> optionsC, List<String> optionsD) {
+    AnswerAdapter(List<String> questions, ArrayList<Integer> answers, List<Integer> answer, List<String> optionsA, List<String> optionsB, List<String> optionsC, List<String> optionsD) {
+        Questions = questions;
         Answers = answers;
         Answer = answer;
         optA = optionsA;
@@ -40,7 +42,7 @@ public class AnswerAdapter extends RecyclerView.Adapter<AnswerAdapter.AnswerView
 
     @Override
     public void onBindViewHolder(@NonNull AnswerViewHolder answerViewHolder, int i) {
-        String qus = "Q."+(i + 1);
+        String qus = "Q"+(i + 1) + ". " + Questions.get(i);
         String ans;
         String corr = null;
 

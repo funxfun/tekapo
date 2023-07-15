@@ -36,7 +36,8 @@ public class AnswersFragment extends Fragment {
 
         ArrayList<Integer> Answers = SolutionActivity.getAnswer();
 
-        AnswerAdapter answerAdapter = new AnswerAdapter(Answers,
+        AnswerAdapter answerAdapter = new AnswerAdapter(SolutionActivity.getQuestion(),
+                Answers,
                 SolutionActivity.getAnswers(),
                 SolutionActivity.getOptA(),
                 SolutionActivity.getOptB(),
