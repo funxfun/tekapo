@@ -63,16 +63,16 @@ public class AnswerAdapter extends RecyclerView.Adapter<AnswerAdapter.AnswerView
         }
 
         switch (Answer.get(i)) {
-            case 1:
+            case 0:
                 corr = 1 + ". " + optA.get(i);
                 break;
-            case 2:
+            case 1:
                 corr = 2 + ". " + optB.get(i);
                 break;
-            case 3:
+            case 2:
                 corr = 3 + ". " + optC.get(i);
                 break;
-            case 4:
+            case 3:
                 corr = 4 + ". " + optD.get(i);
                 break;
         }
@@ -81,7 +81,7 @@ public class AnswerAdapter extends RecyclerView.Adapter<AnswerAdapter.AnswerView
         answerViewHolder.answered.setText(ans);
         answerViewHolder.correct.setText(corr);
 
-        if ( Answer.get(i).equals(Answers.get(i)) )
+        if ( (Answer.get(i) + 1) == (Answers.get(i)) )
             answerViewHolder.answered.setTextColor(Color.GREEN);
         else
             answerViewHolder.answered.setTextColor(Color.RED);
