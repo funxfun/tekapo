@@ -326,8 +326,8 @@ public class QuizActivity extends FragmentActivity {
 				setResult(RESULT_OK, data);
 				if (mBound) {
 					Log.d(TAG, "setIsPIN(true)");
-					mService.setIsPIN(true);
 					unlockSecs(1800);
+//					mService.setIsPIN(true);
 				}
 				else
 				{
