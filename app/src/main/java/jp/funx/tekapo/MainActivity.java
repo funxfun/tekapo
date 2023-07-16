@@ -137,7 +137,7 @@ public class MainActivity extends FragmentActivity {
 					topics.add("technology");
 //					break;
 //				case 7:
-					topics.add("programming");
+//					topics.add("programming");
 //					break;
 //
 //				default:
