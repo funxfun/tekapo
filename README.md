@@ -26,7 +26,7 @@ This is a prototype app that I'd say is still in alpha. The responses from OpenA
 
 ### APIs Used
 
-[OpenAI GPT(https://platform.openai.com/docs/guides/gpt)
+[OpenAI GPT](https://platform.openai.com/docs/guides/gpt)
 
 ## Screenshots
 
