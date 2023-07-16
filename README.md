@@ -10,7 +10,7 @@ I have 3 young boys always coming up with a mirade of reasons to be allowed scre
 
 Tekapo was born as a result as an attempt to reduce that stress. Simply, I wanted an app that would control our Android TVs (any thus any apps like Youtube, Netflix, Disney+ etc.) such that they would be unlocked if they achieved certain tasks.
 
-I then had the idea to prompt OpenAI's GPT LLM (large language model) for several multiple-choice questions covering a range of topics aimed our childrens' age.
+I then had the idea to prompt OpenAI's GPT LLM (large language model) for several multiple-choice questions covering a range of topics aimed our childrens' age. They then get 2 mins for every answer correct. Max 10 answers per session.
 
 This is a prototype app that I'd say is still in alpha. The responses from OpenAI tend to repeat the questions and the format is not consistent (hence the try-and-error attempt at implementing as many approaches as possible in Content.java).
 
@@ -22,7 +22,17 @@ This is a prototype app that I'd say is still in alpha. The responses from OpenA
 ### Configuring (do this before running it on your TV)
 
 1. Sign up to OpenAI's GPT API and get an API key. Change the <API key> after "Bearer" string in MainAcitivity.java:~181
-1. Customize the code in MainActivity.java:110~158 to change things like the language (randomized between English and Japanese), the topics covered, and the age aimed for.
+2. Customize the code in MainActivity.java:110~158 to change things like the language (randomized between English and Japanese), the topics covered, and the age aimed for.
+3. The default PIN is 6683. If you enter this it will unlock the screen for 30 mins. You can change it by changing the _<digit> lines in PINAcivitiy.java:
+```
+if ( keyCode == KeyEvent.KEYCODE_6 )
+```
+
+### Future Ideas
+
+* Run app upon boot
+* Unlock Windows/Mac/Linux desktops in the house via screensaver locks
+* Integrate with the kids' Nintendo Switches to unlock them for XX mins screen time
 
 ### APIs Used
 
