@@ -152,7 +152,7 @@ public class MainActivity extends FragmentActivity {
 
 		// e.g. Give 5 multiple choice questions suitable for a 10 year old boy on a mix of topics in space, technology, math, science, programming and history.
 		// All questions and answers must be in the Japanese language and in JSON format.
-		String problem = "Give " + numProbs + " multiple choice questions suitable for a 10 year old on a mix of topics in "
+		String problem = "Give " + numProbs + " multiple choice questions suitable for a 12 year old on a mix of topics in "
 				+ String.join(", ", topics) + ". " +
 //				+ "Answers must be in " + (isMultichoice ? "4 multi-choice" : "true/false") + " format."
 				"All questions and answers must be in the " + (isJapanese ? "Japanese" : "English") + " language and in JSON format.";
