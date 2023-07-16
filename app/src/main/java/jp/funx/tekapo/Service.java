@@ -81,7 +81,8 @@ public class Service extends android.app.Service {
             int counter = 0;
             while ( runflag ){
                 counter++;
-                Log.d(TAG,"handleMessage() - counter = " + counter + ", unlockSecs = " + unlockSecs);
+                boolean isAppFronttask = isAppFronttask();
+                Log.d(TAG, "handleMessage() - counter = " + counter + ", unlockSecs = " + unlockSecs + ", activate PINActivity - isPIN = " + isPIN + " - isAppFrontTask() = " + isAppFronttask + " - screenOn = " + screenOn);
                 if (unlockSecs > 0 && screenOn) {
                     unlockSecs--;
                     try {
@@ -92,8 +93,7 @@ public class Service extends android.app.Service {
                     continue;
                 }
                 if ( !isPIN && screenOn ) {
-                    if (!isAppFronttask()) {
-                        Log.d(TAG, "handleMessage() activate PINActivity - isPIN = " + isPIN + " - isAppFrontTask() = " + isAppFronttask() + " - screenOn = " + screenOn);
+                    if (!isAppFronttask) {
                         Intent notificationIntent = new Intent(Service.this, QuizActivity.class);
                         notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
                         PendingIntent pendingIntent = PendingIntent.getActivity(Service.this, 0, notificationIntent, 0);
