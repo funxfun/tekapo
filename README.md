@@ -6,7 +6,9 @@
 ((https://youtu.be/rJxNfyU83PM/0.jpg)] // Thumbnail
 (https://youtu.be/rJxNfyU83PM "Tekapo Demo")    // Video Link
 
-[![Watch the video](https://img.youtube.com/vi/nTQUwghvy5Q/default.jpg)](https://youtu.be/nTQUwghvy5Q)
+<a href="http://www.youtube.com/watch?feature=player_embedded&v=nTQUwghvy5Q" target="_blank">
+ <img src="http://img.youtube.com/vi/nTQUwghvy5Q/mqdefault.jpg" alt="Watch the video" width="240" height="180" border="10" />
+</a>
 
 I have 3 young boys always coming up with a mirade of reasons to be allowed screen time on the TV. Sometimes it just gets too much trying to reason with them, or sometimes my wife and I are just too tired to try and engage them in rationale screen time conversation.
 
