@@ -235,9 +235,10 @@ public class QuizActivity extends FragmentActivity {
 
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
-				moveTaskToBack(true);
-				android.os.Process.killProcess(android.os.Process.myPid());
-				System.exit(1);
+				unlockSecs(score * 5);
+//				moveTaskToBack(true);
+//				android.os.Process.killProcess(android.os.Process.myPid());
+//				System.exit(1);
 			}
 		});
 
@@ -251,6 +252,18 @@ public class QuizActivity extends FragmentActivity {
 		dialog.show();
 	}
 
+	public void unlockSecs(int secs) {
+		Toast.makeText(getApplicationContext(), "Unlock for " + (secs * 60) + " mins", Toast.LENGTH_SHORT).show();
+		if (mBound) {
+			Log.d(TAG, "setUnlockMins(" + secs + ")");
+			mService.setUnlockSecs(secs);
+		}
+		else
+		{
+			Log.w(TAG, "cannot setUnlockSecs(" + secs + ") - service not bound");
+			Toast.makeText(this, "cannot setUnlockSecs(" + secs + ") - service not bound", Toast.LENGTH_SHORT).show();
+		}
+	}
 	public void clickNext(View view) {
 
 		int selectedId = optionsGroup.getCheckedRadioButtonId();
@@ -301,16 +314,26 @@ public class QuizActivity extends FragmentActivity {
 	public void clickPIN(View v) {
 		Intent intent = new Intent(getApplicationContext(), PINActivity.class);
 		intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-//		startActivity(intent);
 		startActivityForResult(intent, 300);
 	}
 
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (requestCode == 300) {
 			if (resultCode == RESULT_OK) {
-				Toast.makeText(getApplicationContext(), ""+data.getBooleanArrayExtra("isPIN"), Toast.LENGTH_SHORT).show();
+				Toast.makeText(getApplicationContext(), "Correct PIN entered", Toast.LENGTH_SHORT).show();
 				setResult(RESULT_OK, data);
-				finish();
+				if (mBound) {
+					Log.d(TAG, "setIsPIN(true)");
+					mService.setIsPIN(true);
+//					mService.stopSelf();
+//					finishAndRemoveTask();
+//					System.exit(0);
+				}
+				else
+				{
+					Log.w(TAG, "cannot setIsPIN(true) - service not bound");
+					Toast.makeText(this, "cannot setIsPIN(true) - service not bound", Toast.LENGTH_SHORT).show();
+				}
 			}
 		}
 	}

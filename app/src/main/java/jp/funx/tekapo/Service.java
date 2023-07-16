@@ -48,11 +48,17 @@ public class Service extends android.app.Service {
     private boolean isPIN;
     public void setIsPIN(boolean flag){
         isPIN = flag;
+        unlockSecs = 0;
     }
     public boolean getIsPIN() { return isPIN; }
 
     private Looper serviceLooper;
     private ServiceHandler serviceHandler;
+
+    private int unlockSecs = 0;
+    public void setUnlockSecs(int secs){
+        unlockSecs = secs;
+    }
 
     // Handler that receives messages from the thread
     private final class ServiceHandler extends Handler {
@@ -67,7 +73,16 @@ public class Service extends android.app.Service {
             int counter = 0;
             while ( runflag ){
                 counter++;
-                Log.d(TAG,"handleMessage() - counter = " + counter);
+                Log.d(TAG,"handleMessage() - counter = " + counter + ", unlockSecs = " + unlockSecs);
+                if (unlockSecs > 0 && screenOn) {
+                    unlockSecs--;
+                    try {
+                        Thread.sleep(1000);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    continue;
+                }
                 if ( !isPIN && screenOn ) {
                     if (!isAppFronttask()) {
                         Log.d(TAG, "handleMessage() activate PINActivity - isPIN = " + isPIN + " - isAppFrontTask() = " + isAppFronttask() + " - screenOn = " + screenOn);
@@ -229,5 +244,9 @@ public class Service extends android.app.Service {
         }
 
         return false;
+    }
+
+    public void unlockMins(int mins) {
+
     }
 }
