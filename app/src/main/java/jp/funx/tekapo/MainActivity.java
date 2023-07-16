@@ -5,6 +5,7 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.fragment.app.FragmentActivity;
@@ -369,8 +370,7 @@ public class MainActivity extends FragmentActivity {
 		super.onStart();
 		if ( !isServiceRunning(Service.class, getApplicationContext()) ) {
 			Log.d(TAG,"onStart() - startService()");
-			Intent intent = new Intent(this, Service.class);
-			startService(intent);
+			MainActivity.startService(getApplicationContext());
 //			Toast.makeText(this, "startService(intent)", Toast.LENGTH_SHORT).show();
 		}
 		else {
@@ -412,5 +412,14 @@ public class MainActivity extends FragmentActivity {
 			}
 		}
 		return false;
+	}
+
+	public static void startService(Context context) {
+		Intent intent = new Intent(context, Service.class);
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+			context.startForegroundService(intent);
+		} else {
+			context.startService(intent);
+		}
 	}
 }

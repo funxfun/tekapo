@@ -3,12 +3,17 @@ package jp.funx.tekapo;
 import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
 
 import android.app.ActivityManager;
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Color;
 import android.os.Binder;
+import android.os.Build;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.IBinder;
@@ -17,6 +22,9 @@ import android.os.Message;
 import android.os.Process;
 import android.util.Log;
 import android.widget.Toast;
+
+import androidx.core.app.NotificationCompat;
+import androidx.core.content.ContextCompat;
 
 import java.util.List;
 
@@ -132,6 +140,25 @@ public class Service extends android.app.Service {
         isPIN = false;
         screenOn = true;
 
+        // Avoid this error: Android error: Stopping service due to app idle
+        // https://tutorialspots.com/android-error-stopping-service-due-to-app-idle-6691.html
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            String CHANNEL_ID = "Tekapo Lock Service";
+            NotificationChannel channel = new NotificationChannel(CHANNEL_ID,
+                    "Tekapo Lock Service",
+                    NotificationManager.IMPORTANCE_DEFAULT);
+
+            ((NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE)).createNotificationChannel(channel);
+
+            Notification notification = new NotificationCompat.Builder(this, CHANNEL_ID)
+                    .setContentTitle("")
+                    .setContentText("")
+                    .setColor(Color.TRANSPARENT)
+                    .build();
+
+            startForeground(1, notification);
+        }
+
         // Start up the thread running the service. Note that we create a
         // separate thread because the service normally runs in the process's
         // main thread, which we don't want to block. We also make it
@@ -195,8 +222,6 @@ public class Service extends android.app.Service {
     public void onDestroy() {
         runflag = false;
 //        Toast.makeText(this, "service done", Toast.LENGTH_SHORT).show();
-        //Intent serviceIntent = new Intent(this, Service.class);
-        //this.startService(serviceIntent);
     }
 
     public class ScreenReceiver extends BroadcastReceiver {

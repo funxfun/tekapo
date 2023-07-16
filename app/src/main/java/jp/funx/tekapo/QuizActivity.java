@@ -398,8 +398,7 @@ public class QuizActivity extends FragmentActivity {
 		super.onStart();
 		if ( !MainActivity.isServiceRunning(Service.class, getApplicationContext()) ) {
 			Log.d(TAG,"onStart() - startService()");
-			Intent intent = new Intent(this, Service.class);
-			startService(intent);
+			MainActivity.startService(getApplicationContext());
 			Toast.makeText(this, "startService(intent)", Toast.LENGTH_SHORT).show();
 		}
 		else {

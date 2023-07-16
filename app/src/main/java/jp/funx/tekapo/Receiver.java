@@ -17,7 +17,6 @@ public class Receiver extends android.content.BroadcastReceiver {
         activityIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(activityIntent);
         */
-        Intent serviceIntent = new Intent(context, Service.class);
-        context.startService(serviceIntent);
+        MainActivity.startService(context);
     }
 }
