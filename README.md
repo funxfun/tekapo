@@ -32,28 +32,28 @@ This is a prototype app that I'd say is still in alpha. The responses from OpenA
 
 <table>  
   <tr>  
-    <td><img src="/screenshots/1.png" height = "480" width="270"></td>  
+    <td><img src="/screenshots/1.png" ></td>  
   </tr>  
   <tr> 
-    <td><img src="/screenshots/2.png" height = "480" width="270"></td>  
+    <td><img src="/screenshots/2.png" ></td>  
   </tr>
   <tr> 
-    <td><img src="/screenshots/3.png" height = "480" width="270"></td>  
+    <td><img src="/screenshots/3.png" ></td>  
   </tr>  
   <tr>  
-    <td><img src="/screenshots/4.png" height = "480" width="270"></td>  
+    <td><img src="/screenshots/4.png" ></td>  
   </tr>
   <tr>  
-    <td><img src="/screenshots/5.png" height = "480" width="270"></td>  
+    <td><img src="/screenshots/5.png" ></td>  
   </tr>  
   <tr> 
-    <td><img src="/screenshots/6.png" height = "480" width="270"></td>  
+    <td><img src="/screenshots/6.png" ></td>  
   </tr>
   <tr> 
-    <td><img src="/screenshots/7.png" height = "480" width="270"></td>  
+    <td><img src="/screenshots/7.png" ></td>  
   </tr>  
   <tr>  
-    <td><img src="/screenshots/8.png" height = "480" width="270"></td>  
+    <td><img src="/screenshots/8.png" ></td>  
   </tr>
 </table>  
 
