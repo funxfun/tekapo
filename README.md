@@ -6,6 +6,8 @@
 ((https://youtu.be/rJxNfyU83PM/0.jpg)] // Thumbnail
 (https://youtu.be/rJxNfyU83PM "Tekapo Demo")    // Video Link
 
+[<img src="https://i.ytimg.com/vi/Hc79sDi3f0U/maxresdefault.jpg" width="50%">](https://www.youtube.com/watch?v=Hc79sDi3f0U "Now in Android: 55")
+
 I have 3 young boys always coming up with a mirade of reasons to be allowed screen time on the TV. Sometimes it just gets too much trying to reason with them, or sometimes my wife and I are just too tired to try and engage them in rationale screen time conversation.
 
 Tekapo was born as a result as an attempt to reduce that stress. Simply, I wanted an app that would control our Android TVs (any thus any apps like Youtube, Netflix, Disney+ etc.) such that they would be unlocked if they achieved certain tasks.
