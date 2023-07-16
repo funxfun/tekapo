@@ -17,7 +17,38 @@
         android:onClick="clickNext"
         android:padding="5dp"
         android:text="@string/next"
-        android:textColor="@color/colorPrimaryDark"
+        android:textColor="@drawable/button_selector"
+        android:buttonTint="@drawable/button_selector"
+        android:visibility="visible" />
+
+    <Button
+        android:id="@+id/restart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerInParent="true"
+        android:layout_margin="10dp"
+        android:background="@android:color/white"
+        android:onClick="clickRestart"
+        android:padding="5dp"
+        android:text="@string/restart"
+        android:textColor="@drawable/button_selector"
+        android:buttonTint="@drawable/button_selector"
+        android:visibility="visible" />
+
+    <Button
+        android:id="@+id/pin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_toLeftOf="@+id/next"
+        android:layout_margin="10dp"
+        android:background="@android:color/white"
+        android:onClick="clickPIN"
+        android:padding="5dp"
+        android:text="@string/pin"
+        android:textColor="@drawable/button_selector"
+        android:buttonTint="@drawable/button_selector"
         android:visibility="visible" />
 
     <Button
@@ -31,7 +62,8 @@
         android:onClick="clickPrev"
         android:padding="5dp"
         android:text="@string/prev"
-        android:textColor="@color/colorPrimaryDark"
+        android:textColor="@drawable/button_selector"
+        android:buttonTint="@drawable/button_selector"
         android:visibility="visible" />
 
     <Button
@@ -42,13 +74,14 @@
         android:layout_alignParentBottom="true"
         android:layout_margin="10dp"
         android:background="@android:color/white"
-        android:onClick="clickSubmit"
+        android:onClick="submit"
         android:padding="5dp"
         android:text="@string/submit"
-        android:textColor="@color/colorPrimaryDark"
+        android:textColor="@drawable/button_selector"
+        android:buttonTint="@drawable/button_selector"
         android:visibility="invisible" />
 
-    <android.support.v4.widget.NestedScrollView
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -89,8 +122,10 @@
                     android:layout_height="@dimen/_70dp"
                     android:background="@drawable/roundable"
                     android:padding="10dp"
-                    android:textColor="@color/colorPrimaryDark"
-                    android:textSize="15sp" />
+                    android:textColor="@drawable/button_selector"
+                    android:buttonTint="@drawable/button_selector"
+                    android:textSize="15sp">
+                </RadioButton>
 
                 <RadioButton
                     android:id="@+id/optionB"
@@ -99,7 +134,8 @@
                     android:layout_marginTop="@dimen/_10dp"
                     android:background="@drawable/roundable"
                     android:padding="@dimen/_10dp"
-                    android:textColor="@color/colorPrimaryDark"
+                    android:textColor="@drawable/button_selector"
+                    android:buttonTint="@drawable/button_selector"
                     android:textSize="@dimen/_15sp" />
 
                 <RadioButton
@@ -109,7 +145,8 @@
                     android:layout_marginTop="@dimen/_10dp"
                     android:background="@drawable/roundable"
                     android:padding="@dimen/_10dp"
-                    android:textColor="@color/colorPrimaryDark"
+                    android:textColor="@drawable/button_selector"
+                    android:buttonTint="@drawable/button_selector"
                     android:textSize="@dimen/_15sp" />
 
                 <RadioButton
@@ -119,14 +156,17 @@
                     android:layout_marginTop="@dimen/_10dp"
                     android:background="@drawable/roundable"
                     android:padding="@dimen/_10dp"
-                    android:textColor="@color/colorPrimaryDark"
+                    android:textColor="@drawable/button_selector"
+                    android:buttonTint="@drawable/button_selector"
+                    android:nextFocusDown="@id/next"
+                    android:nextFocusRight="@id/next"
                     android:textSize="@dimen/_15sp" />
 
             </RadioGroup>
 
         </LinearLayout>
 
-    </android.support.v4.widget.NestedScrollView>
+    </androidx.core.widget.NestedScrollView>
 
     <ProgressBar
         android:id="@+id/loading_indicator"

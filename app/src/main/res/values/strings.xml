@@ -1,8 +1,10 @@
 <resources>
-    <string name="app_name">Quiz</string>
+    <string name="app_name">Tekapo</string>
     <string name="next">Next</string>
     <string name="prev">Prev</string>
-    <string name="submit">Submit</string>
+    <string name="submit">Finish</string>
+    <string name="pin">PIN</string>
+    <string name="restart">Restart</string>
     <string name="view_answer">View Answer</string>
 
     <string name="answers">Answers</string>
@@ -82,5 +84,8 @@
 
     <string name="filter">Filter</string>
 
-
+    <string name="TextEnterPIN">Please enter pin:</string>
+    <string name="TextWrongPIN">Wrong PIN!</string>
+    <string name="TextOkPIN">PIN OK</string>
+    <string name="ImageViewDescriptionPIN">pin</string>
 </resources>

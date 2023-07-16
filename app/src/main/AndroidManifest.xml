@@ -1,8 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.immadisairaj.quiz">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <uses-feature
+        android:name="android.software.leanback"
+        android:required="true" />
+    <uses-feature
+        android:name="android.hardware.touchscreen"
+        android:required="false" />
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.BROADCAST_STICKY" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.GET_TASKS" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
 
     <application
         android:allowBackup="true"
@@ -12,29 +23,54 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:exported="false"
             android:name=".QuizActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="landscape" />
+        <activity
+            android:exported="false"
+            android:name=".PINActivity"
+            android:screenOrientation="landscape"/>
         <activity
             android:name=".SolutionActivity"
             android:label="Solutions"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="landscape" />
         <activity
-            android:name=".HomeActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:exported="true"
+            android:name=".MainActivity"
+            android:banner="@drawable/myapp_icon_foreground"
+            android:icon="@drawable/myapp_icon_foreground"
+            android:label="@string/app_name"
+            android:logo="@drawable/myapp_icon_foreground"
+            android:screenOrientation="landscape">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".SettingActivity"
+        <activity
+            android:exported="false"
+            android:name=".SettingActivity"
             android:label="Filter"
-            android:screenOrientation="portrait">
+            android:screenOrientation="landscape">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.example.immadisairaj.quiz.HomeActivity"/>
+                android:value="jp.funx.tekapo.MainActivity"/>
     </activity>
+    <receiver
+        android:name="jp.funx.tekapo.Receiver"
+        android:label="TvLockBroadcastReceiver"
+        android:enabled="true"
+        android:exported="true">
+        <intent-filter>
+            <category android:name="android.intent.category.DEFAULT" />
+            <action android:name="android.intent.action.BOOT_COMPLETED" />
+            <action android:name="android.intent.action.QUICKBOOT_POWERON" />
+        </intent-filter>
+    </receiver>
+    <service
+        android:name="jp.funx.tekapo.Service"
+        android:label="SVC-Kindersicherung">
+    </service>
     </application>
 
 </manifest>
