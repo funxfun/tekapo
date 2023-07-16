@@ -257,6 +257,11 @@ public class QuizActivity extends FragmentActivity {
 		if (mBound) {
 			Log.d(TAG, "setUnlockMins(" + secs + ")");
 			mService.setUnlockSecs(secs);
+			Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+			intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+			startActivity(intent);
+			finish();
+			moveTaskToBack(true);
 		}
 		else
 		{
