@@ -236,9 +236,6 @@ public class QuizActivity extends FragmentActivity {
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
 				unlockSecs(score * 5);
-//				moveTaskToBack(true);
-//				android.os.Process.killProcess(android.os.Process.myPid());
-//				System.exit(1);
 			}
 		});
 
