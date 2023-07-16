@@ -71,14 +71,24 @@ public class QuizActivity extends FragmentActivity {
 		setContentView(R.layout.activity_quiz);
 
 		ButterKnife.bind(this);
-		Intent i = getIntent();
-		qAndA = (Question) i.getSerializableExtra("question");
-		q_nos = "Question: " + 1 + "/" + qAndA.question.size();
-		questions = findViewById(R.id.question);
-		questions.setText("Quiz");
-		prevButton.setVisibility(View.GONE);
-		Answers = new ArrayList<>();
+		try {
+			Intent i = getIntent();
+			qAndA = (Question) i.getSerializableExtra("question");
+			q_nos = "Question: " + 1 + "/" + qAndA.question.size();
+			questions = findViewById(R.id.question);
+			questions.setText("Quiz");
+			prevButton.setVisibility(View.GONE);
+			Answers = new ArrayList<>();
+		} catch (NullPointerException npe) {
+			npe.printStackTrace();
 
+			// Restart the app if the question didn't get sent over
+			Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+			intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+			startActivity(intent);
+			finish();
+			return;
+		}
 		ques = -1;
 		score = 0;
 		ans = 0;
