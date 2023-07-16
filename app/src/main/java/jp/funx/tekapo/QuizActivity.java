@@ -276,6 +276,7 @@ public class QuizActivity extends FragmentActivity {
 			Toast.makeText(this, "cannot setUnlockSecs(" + secs + ") - service not bound", Toast.LENGTH_SHORT).show();
 		}
 	}
+
 	public void clickNext(View view) {
 
 		int selectedId = optionsGroup.getCheckedRadioButtonId();
