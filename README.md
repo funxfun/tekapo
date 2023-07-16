@@ -6,11 +6,11 @@
 [![Tekapo Android TV GPT Quiz Unlock Screentime App for Kids  video](https://youtu.be/rJxNfyU83PM/0.jpg)](https://youtu.be/rJxNfyU83PM)
 ```
 
-I have 3 young boys always coming up with a mirade of reasons to be allowed screen time on the TV. Sometimes it just gets too much trying to reason with them, or sometimes my wife and I are just too tired to try and engage them in conversation.
+I have 3 young boys always coming up with a mirade of reasons to be allowed screen time on the TV. Sometimes it just gets too much trying to reason with them, or sometimes my wife and I are just too tired to try and engage them in rationale screen time conversation.
 
-Tekapo was born as a result as an attempt to reduce that stress. Simply, I wanted an app that'd like the Android TV (any thus any apps like Youtube, Netflix, Disney+ etc.) but that could be unlocked if they achieved certain tasks.
+Tekapo was born as a result as an attempt to reduce that stress. Simply, I wanted an app that would control our Android TVs (any thus any apps like Youtube, Netflix, Disney+ etc.) such that they would be unlocked if they achieved certain tasks.
 
-I then had the idea to prompt OpenAI's GPT LLM (large language model) for several multiple-choice questions covering a range of topics aimed at a child's age.
+I then had the idea to prompt OpenAI's GPT LLM (large language model) for several multiple-choice questions covering a range of topics aimed our childrens' age.
 
 This is a prototype app that I'd say is still in alpha. The responses from OpenAI tend to repeat the questions and the format is not consistent (hence the try-and-error attempt at implementing as many approaches as possible in Content.java).
 
@@ -21,7 +21,7 @@ This is a prototype app that I'd say is still in alpha. The responses from OpenA
 
 ### Configuring (do this before running it on your TV)
 
-1. Sign up to OpenAI's GPT API and get an API key. Change the <API key> after "Bearer" in MainAcitivity.java:~181
+1. Sign up to OpenAI's GPT API and get an API key. Change the <API key> after "Bearer" string in MainAcitivity.java:~181
 1. Customize the code in MainActivity.java:110~158 to change things like the language (randomized between English and Japanese), the topics covered, and the age aimed for.
 
 ### APIs Used
