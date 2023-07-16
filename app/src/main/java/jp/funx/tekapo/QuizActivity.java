@@ -253,7 +253,7 @@ public class QuizActivity extends FragmentActivity {
 	}
 
 	public void unlockSecs(int secs) {
-		Toast.makeText(getApplicationContext(), "Unlock for " + (secs * 60) + " mins", Toast.LENGTH_SHORT).show();
+		Toast.makeText(getApplicationContext(), "Unlock for " + String.format("%.1f", (secs / 60f)) + " mins", Toast.LENGTH_SHORT).show();
 		if (mBound) {
 			Log.d(TAG, "setUnlockMins(" + secs + ")");
 			mService.setUnlockSecs(secs);
