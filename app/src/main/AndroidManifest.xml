@@ -24,11 +24,11 @@
         <activity
             android:exported="false"
             android:name=".QuizActivity"
-            android:screenOrientation="landscape"></activity>
+            android:screenOrientation="landscape" />
         <activity
             android:exported="false"
             android:name=".PINActivity"
-            android:screenOrientation="landscape"></activity>
+            android:screenOrientation="landscape"/>
         <activity
             android:name=".SolutionActivity"
             android:label="Solutions"
