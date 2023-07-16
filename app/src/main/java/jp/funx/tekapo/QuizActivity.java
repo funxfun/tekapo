@@ -411,7 +411,7 @@ public class QuizActivity extends FragmentActivity {
 				// Bind to Service
 				Intent intent = new Intent(this, Service.class);
 				bindService(intent, connection, Context.BIND_AUTO_CREATE);
-				Toast.makeText(this, "bindService()", Toast.LENGTH_SHORT).show();
+//				Toast.makeText(this, "bindService()", Toast.LENGTH_SHORT).show();
 			} else {
 				Log.d(TAG,"onStart() - already bound");
 			}

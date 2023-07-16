@@ -146,7 +146,7 @@ public class Service extends android.app.Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         Log.d(TAG,"onStartCommand()");
-        Toast.makeText(this, "service starting", Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, "service starting", Toast.LENGTH_SHORT).show();
 
         final IntentFilter filter = new IntentFilter(Intent.ACTION_SCREEN_ON);
         filter.addAction(Intent.ACTION_SCREEN_OFF);
@@ -160,7 +160,7 @@ public class Service extends android.app.Service {
         Message msg = serviceHandler.obtainMessage();
         msg.arg1 = startId;
         serviceHandler.sendMessage(msg);
-        Toast.makeText(this, "startId = " + startId, Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, "startId = " + startId, Toast.LENGTH_SHORT).show();
 
         //return super.onStartCommand(intent, flags, startId);
 
@@ -173,7 +173,7 @@ public class Service extends android.app.Service {
         Log.d(TAG,"onBind()");
         Log.d(TAG,"onBind() - runflag = " + runflag);
         // A client is binding to the service with bindService()
-        Toast.makeText(this, "service bound", Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, "service bound", Toast.LENGTH_SHORT).show();
         return mBinder;
     }
 
@@ -194,7 +194,7 @@ public class Service extends android.app.Service {
     @Override
     public void onDestroy() {
         runflag = false;
-        Toast.makeText(this, "service done", Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, "service done", Toast.LENGTH_SHORT).show();
         //Intent serviceIntent = new Intent(this, Service.class);
         //this.startService(serviceIntent);
     }
