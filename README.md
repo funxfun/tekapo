@@ -34,11 +34,12 @@ OpenAI GPT [Docs](https://platform.openai.com/docs/guides/gpt)
   <tr>  
     <td><img src="/screenshots/1.png" height = "480" width="270"></td>  
     <td><img src="/screenshots/2.png" height = "480" width="270"></td>  
-    <td><img src="/screenshots/3.png" height = "480" width="270"></td>  
-
   </tr>  
-  <tr>  
+  <tr> 
+    <td><img src="/screenshots/3.png" height = "480" width="270"></td>
     <td><img src="/screenshots/4.png" height = "480" width="270"></td>  
+  </tr>
+  <tr> 
     <td><img src="/screenshots/5.png" height = "480" width="270"></td>  
     <td><img src="/screenshots/6.png" height = "480" width="270"></td>  
   </tr>  
