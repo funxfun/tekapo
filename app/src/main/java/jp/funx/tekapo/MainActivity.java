@@ -273,9 +273,7 @@ public class MainActivity extends FragmentActivity {
 
 				progressBar.setVisibility(View.INVISIBLE);
 				start.setClickable(true);
-				Intent intent = new Intent(MainActivity.this, QuizActivity.class);
-				intent.putExtra("question", q);
-				startActivity(intent);
+				startQuiz();
 			}
 
 			@Override
@@ -287,6 +285,13 @@ public class MainActivity extends FragmentActivity {
 				start.setClickable(true);
 			}
 		});
+	}
+
+	private void startQuiz() {
+		Intent intent = new Intent(MainActivity.this, QuizActivity.class);
+		intent.putExtra("question", q);
+		startActivity(intent);
+		finish();
 	}
 
 	final String TAG = "MainActivity";
