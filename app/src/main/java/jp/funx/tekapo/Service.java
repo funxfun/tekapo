@@ -245,8 +245,4 @@ public class Service extends android.app.Service {
 
         return false;
     }
-
-    public void unlockMins(int mins) {
-
-    }
 }
