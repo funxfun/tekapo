@@ -107,7 +107,7 @@ public class MainActivity extends FragmentActivity {
 //		}
 
 		Random rnd = new Random();
-		boolean isJapanese = rnd.nextInt(4) >= 3 ? true : false;
+		boolean isJapanese = false;//rnd.nextInt(4) >= 3 ? true : false;
 //		boolean isMultichoice = true; //rnd.nextInt(5) >= 2 ? true : false; // TODO: handle true/false responses later
 		int numProbs = 10;
 		ArrayList<String> topics = new ArrayList<String>();
