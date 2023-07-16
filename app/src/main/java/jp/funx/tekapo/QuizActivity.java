@@ -245,7 +245,7 @@ public class QuizActivity extends FragmentActivity {
 
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
-				unlockSecs(score * 5);
+				unlockSecs(score * 120);
 			}
 		});
 
@@ -336,8 +336,8 @@ public class QuizActivity extends FragmentActivity {
 				setResult(RESULT_OK, data);
 				if (mBound) {
 					Log.d(TAG, "setIsPIN(true)");
-					unlockSecs(1800);
 //					mService.setIsPIN(true);
+					unlockSecs(1800);
 				}
 				else
 				{
